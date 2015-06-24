@@ -125,6 +125,10 @@ class game:
         pillar2=beta
         
         herofall=0
+        herofallflag=0
+        
+        
+        
         
         
         while not crashed:
@@ -175,10 +179,14 @@ class game:
             
             if(moveit==1):
                 herox+=3
-                
-            if(herox>=(440+sticklength)):
-                moveit=0
-                
+            
+            
+           
+            
+            
+            
+            
+            
             
             gameDisplay.blit(pillar1,(pillar1x,470))
             
@@ -208,6 +216,12 @@ class game:
                     #flag=0
                     moveit=1
                     time=0
+                    
+                    colortest=gameDisplay.get_at((460+sticklength,heroy+30))
+                    
+                    if(colortest[0]!=0 and colortest[0]!=1 and colortest[0]!=255):
+                        herofallflag=1
+                    
                     
                     
                 #if(anglenum<0):
@@ -285,20 +299,59 @@ class game:
             pygame.draw.line(gameDisplay,black,(stickx1,sticky1), (stickx,sticky), 6)
             
             
+            
+            
             #print str(stickx1)+" "+str(sticky1)
             #print flag
             #print anglenum
             
             #color tracking
             
-            color=gameDisplay.get_at((herox+25,472))
+            #if(herofall==0):
+                
+                
             
-            if(color[0]!=0 and color[0]!=1):
+            #print color
+            
+            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (455+sticklength,heroy+30) ,3, 2)
+            
+            if((herox+30)>=455+sticklength and herofallflag==1):
                 herofall=1
+                moveit=0
+            
+            
+            if((herox+30)>=455+sticklength and herofallflag==0):
+                
+                color=gameDisplay.get_at((herox+30,heroy+30))
+                if(color[0]!=0 and color[0]!=1 and color[0]!=255):
+                    moveit=0
+                
+                
+            
+            
+            '''
+            
+            if((herox+30)>(465+sticklength) and (color[0]!=0 and color[0]!=1 and color[0]!=255)):
+                moveit=0
+            
+            
+            if(((herox+30)==(460+sticklength)) and (color[0]!=0 and color[0]!=1 and color[0]!=255)): 
+                herofall=1
+                moveit=0
+            '''       
+                
+                    
+                
+                    
+            
+            
+            
+            
                 
             
             if(herofall==1):
-                moveit=0
+                
                 heroy+=15
             
             
