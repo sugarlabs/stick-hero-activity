@@ -71,15 +71,34 @@ class game:
             
             
         hero=pygame.image.load("images/hero.png")
+        
+        #herotr=hero
+        herotr=pygame.transform.scale(hero,(30,26))
+        
+        hero1=pygame.image.load("images/hero1.png")
+        hero2=pygame.image.load("images/hero2.png")
+        hero3=pygame.image.load("images/hero3.png")
         stick=pygame.image.load("images/stick.png")
         background=pygame.image.load("images/background.png")
         alpha=pygame.image.load("images/alpha.png")
+        beta=pygame.image.load("images/beta.png")
+        gamma=pygame.image.load("images/gamma.png")
+        delta=pygame.image.load("images/delta.png")
+        
+        
         
         #stickx1=455
         #sticky1=50
         
+        herokicklist=[hero,herotr]
+        
+        herolist=[hero,hero1,hero2,hero3]
+        
+        
+        pillarlist=[alpha,beta,gamma,delta]
+        
         stickx1=stickx=455
-        sticky1=sticky=470
+        sticky1=sticky=472
         
         anglenum=90
         angle=(pi/180)*anglenum
@@ -87,8 +106,26 @@ class game:
         sticklength=0
         
         time=0
-        flag=0
+        flag=0          #stick fall flag
         keypressflag=0
+        
+        moveit=0  #hero move flag
+        
+        herox=420
+        heroy=442
+        
+        i=0
+        j=0
+        k=0
+        
+        pillar1x=355
+        pillar2x=650
+        
+        pillar1=alpha
+        pillar2=beta
+        
+        herofall=0
+        
         
         while not crashed:
         #Gtk events
@@ -106,19 +143,51 @@ class game:
             #print event
             
                 
-            gameDisplay.fill(white)
+            gameDisplay.fill(black)
             gameDisplay.blit(background,(350,0))
             
-            gameDisplay.blit(hero,(420,443))
+            
+            i+=1
+            if(i%4==0):
+                j+=1
+            
+            if(j==4):
+                j=0
+                
+                
+            if(moveit==1):    
+                gameDisplay.blit(herolist[j],(herox,heroy))
+            
+            if(moveit==0):
+                
+                if(k<=6):
+                    gameDisplay.blit(herokicklist[0],(herox,heroy))
+                if(k<=12):
+                    gameDisplay.blit(herokicklist[1],(herox-1,heroy+2))
+                
+                if(keypressflag==1):
+                    k+=1
+                if(k==12):
+                    k=0
+                    
+                    
+                    
+            
+            if(moveit==1):
+                herox+=3
+                
+            if(herox>=(440+sticklength)):
+                moveit=0
+                
+            
+            gameDisplay.blit(pillar1,(pillar1x,470))
+            
+            gameDisplay.blit(pillar2,(pillar2x,470))
             
             
-            #gameDisplay.blit(stick,(455,sticky1))
-            
-            gameDisplay.blit(alpha,(355,470))
             
             
-            
-            
+           
             
             
             
@@ -127,20 +196,52 @@ class game:
             if(flag==0):
                 sticklength=sticky-sticky1
             
-            if(anglenum>=0 and flag==1 ):
+            if(anglenum>0 and flag==1 ):
                 
                 anglenum-=0.03*(time)*(time)
-                if(anglenum<0):
+                if(anglenum<=0):
                     
                     anglenum=0
-                    sticky1=470
+                    sticky1=472
                     stickx1=stickx+sticklength
-                    flag=0
+                    #sticklength=stickx1-stickx
+                    #flag=0
+                    moveit=1
+                    time=0
+                    
+                    
                 #if(anglenum<0):
                 #    break
                 
                 #if(anglenum>85):
                 time+=1
+                
+            
+            if(herofall==1):
+                
+                
+                if(anglenum>-90):
+                    anglenum-=0.03*(time)*(time)
+                    
+                    #print "hey"
+                    
+                    if(anglenum<=-90):
+                        
+                        #print "hey"
+                        anglenum=-90
+                        sticky1=sticky+sticklength
+                        stickx1=455
+                        #sticklength=stickx1-stickx
+                        #flag=0
+                        moveit=1
+                        time=0
+                    
+                    
+                    
+                    time+=1
+            
+                
+                
             
             angle=(pi/180)*anglenum
             
@@ -153,8 +254,7 @@ class game:
             if keypressflag==1:  
                 
                 sticky1-=5
-                #print sticky1
-                #print "hello"
+                
                 
                 
                 
@@ -164,28 +264,42 @@ class game:
                 #print "fuck"
                 
             
-            #print event
-            #print sticklength
-            #print stickx1
+            
+            
+            
+            
+            
             
             
             
             if(flag==1):
-                sticky1=470-sticklength*sin(angle)
+                sticky1=472-sticklength*sin(angle)
                 stickx1=455+sticklength*cos(angle)
+                
+            '''
+            if(herofall==1):
+                sticky1=472-sticklength*sin(angle)
+                stickx1=455+sticklength*cos(angle) 
+            '''
             
             pygame.draw.line(gameDisplay,black,(stickx1,sticky1), (stickx,sticky), 6)
             
-            print str(stickx1)+" "+str(sticky1)
             
-            #print event
+            #print str(stickx1)+" "+str(sticky1)
+            #print flag
+            #print anglenum
             
-            '''
-            if event.type==pygame.KEYDOWN and event.key==273 and f1==0:
-                jump.play(0)
-                f1=1
-                m1=1
-            '''
+            #color tracking
+            
+            color=gameDisplay.get_at((herox+25,472))
+            
+            if(color[0]!=0 and color[0]!=1):
+                herofall=1
+                
+            
+            if(herofall==1):
+                moveit=0
+                heroy+=15
             
             
             
