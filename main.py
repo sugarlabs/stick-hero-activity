@@ -86,6 +86,9 @@ class game:
         delta=pygame.image.load("images/delta.png")
         
         
+        back1=pygame.image.load("background/back1.png").convert()
+        back1a=pygame.transform.scale(back1,(1280,720))
+        back1b=back1a
         
         #stickx1=455
         #sticky1=50
@@ -127,7 +130,11 @@ class game:
         herofall=0
         herofallflag=0
         
+        pillarmoveflag=0
         
+        stickmove=0
+        
+        backx=0
         
         
         
@@ -147,8 +154,9 @@ class game:
             #print event
             
                 
-            gameDisplay.fill(black)
-            gameDisplay.blit(background,(350,0))
+            gameDisplay.fill(white)
+            gameDisplay.blit(back1a,(250+backx,0))
+            #gameDisplay.blit(background,(350,0))
             
             
             i+=1
@@ -179,6 +187,7 @@ class game:
             
             if(moveit==1):
                 herox+=3
+                backx-=1
             
             
            
@@ -213,7 +222,7 @@ class game:
                     sticky1=472
                     stickx1=stickx+sticklength
                     #sticklength=stickx1-stickx
-                    #flag=0
+                    flag=0
                     moveit=1
                     time=0
                     
@@ -296,8 +305,16 @@ class game:
                 stickx1=455+sticklength*cos(angle) 
             '''
             
-            pygame.draw.line(gameDisplay,black,(stickx1,sticky1), (stickx,sticky), 6)
+            print flag
             
+            if(stickx<=349):
+                
+                stickmove=0
+                stickx1=stickx=455
+                sticky1=sticky=472
+            
+            if((stickx1-stickx)!=0):
+                pygame.draw.line(gameDisplay,black,(stickx1,sticky1), (stickx,sticky), 6)
             
             
             
@@ -314,37 +331,62 @@ class game:
             #print color
             
             pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
-            pygame.draw.circle(gameDisplay,white, (455+sticklength,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
-            if((herox+30)>=455+sticklength and herofallflag==1):
+            
+            
+            #if hero has to fall
+            
+            if((herox+30)>=457+sticklength and herofallflag==1):
                 herofall=1
                 moveit=0
+                
             
-            
-            if((herox+30)>=455+sticklength and herofallflag==0):
+            #if hero has to stop
+            if((herox+30)>=457+sticklength and herofallflag==0):
                 
                 color=gameDisplay.get_at((herox+30,heroy+30))
+                
                 if(color[0]!=0 and color[0]!=1 and color[0]!=255):
                     moveit=0
-                
-                
-            
-            
-            '''
-            
-            if((herox+30)>(465+sticklength) and (color[0]!=0 and color[0]!=1 and color[0]!=255)):
-                moveit=0
-            
-            
-            if(((herox+30)==(460+sticklength)) and (color[0]!=0 and color[0]!=1 and color[0]!=255)): 
-                herofall=1
-                moveit=0
-            '''       
-                
+                    pillarmoveflag=1
+                    stickmove=1
+                    
                     
                 
+            
+            #pillar movement condition check
+            
+            pygame.draw.circle(gameDisplay,white,(462,478),3,2)
+            
+            
+            if(moveit==0 and pillarmoveflag==1):
+                
+                color=gameDisplay.get_at((462,478))
+                if(color[0]!=0 and color[0]!=1):
+                
+                    pillar1x-=3
+                    pillar2x-=3
+                    
+                    if(stickmove==1):
+                        stickx1-=3
+                        stickx-=3
+                    
+                    herox-=3
+                    print "help"
+                    
+                    
+                else:
+                    pillarmoveflag=0
+                    
+                    color=gameDisplay.get_at((450,472))
+                    
                     
             
+                    
+            pygame.draw.rect(gameDisplay,black,(0,0,349,768))    
+                    
+            pygame.draw.rect(gameDisplay,black,(840,0,693,768))
             
             
             
