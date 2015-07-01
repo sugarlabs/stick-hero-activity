@@ -136,6 +136,8 @@ class game:
         
         backx=0
         
+        pillarfound=0
+        
         
         
         while not crashed:
@@ -211,7 +213,11 @@ class game:
             
             
             if(flag==0):
-                sticklength=sticky-sticky1
+                
+                if(stickx==stickx1):
+                    sticklength=abs(sticky-sticky1)
+                if(sticky==sticky1):
+                    sticklength=abs(stickx1-stickx)
             
             if(anglenum>0 and flag==1 ):
                 
@@ -228,8 +234,9 @@ class game:
                     
                     colortest=gameDisplay.get_at((460+sticklength,heroy+30))
                     
-                    if(colortest[0]!=0 and colortest[0]!=1 and colortest[0]!=255):
+                    if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) or colortest[0]==255):
                         herofallflag=1
+                        
                     
                     
                     
@@ -239,6 +246,7 @@ class game:
                 #if(anglenum>85):
                 time+=1
                 
+            print sticklength
             
             if(herofall==1):
                 
@@ -299,13 +307,10 @@ class game:
                 sticky1=472-sticklength*sin(angle)
                 stickx1=455+sticklength*cos(angle)
                 
-            '''
-            if(herofall==1):
-                sticky1=472-sticklength*sin(angle)
-                stickx1=455+sticklength*cos(angle) 
-            '''
             
-            print flag
+            
+            
+            
             
             if(stickx<=349):
                 
@@ -313,22 +318,12 @@ class game:
                 stickx1=stickx=455
                 sticky1=sticky=472
             
-            if((stickx1-stickx)!=0):
-                pygame.draw.line(gameDisplay,black,(stickx1,sticky1), (stickx,sticky), 6)
+            if((stickx1-stickx)!=0 or sticky1-sticky!=0):
+                pygame.draw.line(gameDisplay,black,(stickx1,sticky1),(stickx,sticky), 6)
             
             
             
-            #print str(stickx1)+" "+str(sticky1)
-            #print flag
-            #print anglenum
             
-            #color tracking
-            
-            #if(herofall==0):
-                
-                
-            
-            #print color
             
             pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
             pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
@@ -340,6 +335,7 @@ class game:
             if((herox+30)>=457+sticklength and herofallflag==1):
                 herofall=1
                 moveit=0
+                flag=1
                 
             
             #if hero has to stop
@@ -363,7 +359,7 @@ class game:
             if(moveit==0 and pillarmoveflag==1):
                 
                 color=gameDisplay.get_at((462,478))
-                if(color[0]!=0 and color[0]!=1):
+                if((color[0]!=0 and color[0]!=1) or pillarfound==1):
                 
                     pillar1x-=3
                     pillar2x-=3
@@ -373,10 +369,14 @@ class game:
                         stickx-=3
                     
                     herox-=3
-                    print "help"
+                    #print "help"
                     
                     
                 else:
+                    pillarfound=1
+                    
+                    
+                if(color[0]!=0 and color[0]!=1 and pillarfound==1):    
                     pillarmoveflag=0
                     
                     color=gameDisplay.get_at((450,472))
