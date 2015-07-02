@@ -31,6 +31,8 @@ import sys
 
 from math import *
 
+from random import *
+
 
 
 class game:
@@ -78,17 +80,21 @@ class game:
         hero1=pygame.image.load("images/hero1.png")
         hero2=pygame.image.load("images/hero2.png")
         hero3=pygame.image.load("images/hero3.png")
-        stick=pygame.image.load("images/stick.png")
-        background=pygame.image.load("images/background.png")
-        alpha=pygame.image.load("images/alpha.png")
-        beta=pygame.image.load("images/beta.png")
-        gamma=pygame.image.load("images/gamma.png")
-        delta=pygame.image.load("images/delta.png")
+        stick=pygame.image.load("images/stick.png").convert()
+        background=pygame.image.load("images/background.png").convert()
+        alpha=pygame.image.load("images/alpha.png").convert()
+        beta=pygame.image.load("images/beta.png").convert()
+        gamma=pygame.image.load("images/gamma.png").convert()
+        delta=pygame.image.load("images/delta.png").convert()
         
         
         back1=pygame.image.load("background/back1.png").convert()
         back1a=pygame.transform.scale(back1,(1280,720))
         back1b=back1a
+        
+        
+        
+        
         
         #stickx1=455
         #sticky1=50
@@ -114,7 +120,7 @@ class game:
         
         moveit=0  #hero move flag
         
-        herox=420
+        herox=429
         heroy=442
         
         i=0
@@ -123,9 +129,13 @@ class game:
         
         pillar1x=355
         pillar2x=650
+        pillar3x=randint(845,950)
         
         pillar1=alpha
         pillar2=beta
+        pillar3=pillarlist[randint(0,3)]
+        
+        
         
         herofall=0
         herofallflag=0
@@ -137,6 +147,10 @@ class game:
         backx=0
         
         pillarfound=0
+        
+        score=0
+        
+        keyinit=0
         
         
         
@@ -203,6 +217,9 @@ class game:
             
             gameDisplay.blit(pillar2,(pillar2x,470))
             
+            gameDisplay.blit(pillar3,(pillar3x,470))
+            
+            
             
             
             
@@ -210,7 +227,7 @@ class game:
             
             
             
-            
+            #sticklength calculation
             
             if(flag==0):
                 
@@ -218,6 +235,10 @@ class game:
                     sticklength=abs(sticky-sticky1)
                 if(sticky==sticky1):
                     sticklength=abs(stickx1-stickx)
+                    
+                    
+                    
+            # stick fall from Vertical to Horizontal       
             
             if(anglenum>0 and flag==1 ):
                 
@@ -237,16 +258,14 @@ class game:
                     if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) or colortest[0]==255):
                         herofallflag=1
                         
-                    
-                    
-                    
-                #if(anglenum<0):
-                #    break
                 
-                #if(anglenum>85):
                 time+=1
                 
-            print sticklength
+            
+            
+            
+            # stick fall from horizontal to bottom
+            
             
             if(herofall==1):
                 
@@ -272,16 +291,31 @@ class game:
                     time+=1
             
                 
-                
+            #angle calculation    
             
             angle=(pi/180)*anglenum
             
-            if event.type==pygame.KEYDOWN and event.key==273:
+            
+            #keypress check
+            
+            if(keyinit==0):
+            
+                if event.type==pygame.KEYDOWN and event.key==273:
                 #jump.play(0)
                 
-                keypressflag=1
+                    keypressflag=1
+                    keyinit=1
+            
+            if(keypressflag==1):
+                
+                if event.type==pygame.KEYUP  and event.key==273:
+                    flag=1
+                    keypressflag=0
               
-              
+            
+            
+            
+            
             if keypressflag==1:  
                 
                 sticky1-=5
@@ -289,11 +323,8 @@ class game:
                 
                 
                 
-            if event.type==pygame.KEYUP  and event.key==273:
-                flag=1
-                keypressflag=0
-                #print "fuck"
-                
+            
+                    
             
             
             
@@ -301,7 +332,7 @@ class game:
             
             
             
-            
+            #coordinates calculation while stick free fall
             
             if(flag==1):
                 sticky1=472-sticklength*sin(angle)
@@ -310,7 +341,7 @@ class game:
             
             
             
-            
+            #zeroing the length of the stick as it surpassed left boundary
             
             if(stickx<=349):
                 
@@ -323,7 +354,7 @@ class game:
             
             
             
-            
+            #test circles
             
             pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
             pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
@@ -363,6 +394,7 @@ class game:
                 
                     pillar1x-=3
                     pillar2x-=3
+                    pillar3x-=3
                     
                     if(stickmove==1):
                         stickx1-=3
@@ -376,10 +408,67 @@ class game:
                     pillarfound=1
                     
                     
+                    
+                
+                #next pillar reach criterion
+                
                 if(color[0]!=0 and color[0]!=1 and pillarfound==1):    
                     pillarmoveflag=0
                     
-                    color=gameDisplay.get_at((450,472))
+                    score+=1
+                    
+                    
+                    # re-initialization of the variables
+                    
+                    stickx1=stickx=455
+                    sticky1=sticky=472
+        
+                    anglenum=90
+                    angle=(pi/180)*anglenum
+        
+                    sticklength=0
+        
+                    time=0
+                    flag=0          #stick fall flag
+                    keypressflag=0
+        
+                    moveit=0  #hero move flag
+        
+                    herox=429
+                    heroy=442
+        
+                    i=0
+                    j=0
+                    k=0
+        
+                    
+                    if(pillar1x<=300):
+                        pillar1x=randint(845,950)
+                        pillar1=pillarlist[randint(0,3)]
+        
+                    if(pillar2x<=300):
+                        pillar2x=randint(845,950)
+                        pillar2=pillarlist[randint(0,3)]
+                    
+                    if(pillar3x<=300):
+                        pillar3x=randint(845,950)
+                        pillar3=pillarlist[randint(0,3)]
+                    
+                    
+                    
+        
+                    herofall=0
+                    herofallflag=0
+        
+                    pillarmoveflag=0
+        
+                    stickmove=0
+        
+                    
+        
+                    pillarfound=0
+                    
+                    keyinit=0
                     
                     
             
