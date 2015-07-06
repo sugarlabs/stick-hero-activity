@@ -88,9 +88,10 @@ class game:
         delta=pygame.image.load("images/delta.png").convert()
         
         
-        back1=pygame.image.load("background/back1.png").convert()
+        back1=pygame.image.load("background/back4.png").convert()
         back1a=pygame.transform.scale(back1,(1280,720))
         back1b=back1a
+        
         
         
         
@@ -123,13 +124,16 @@ class game:
         herox=429
         heroy=442
         
+        heropointer=0
+        
+        
         i=0
         j=0
         k=0
         
         pillar1x=355
         pillar2x=650
-        pillar3x=randint(845,950)
+        pillar3x=randint(845,900)
         
         pillar1=alpha
         pillar2=beta
@@ -151,6 +155,15 @@ class game:
         score=0
         
         keyinit=0
+        
+        speed=4
+        
+        acc1=acc2=acc3=0
+        
+        pillarfast=0
+        
+        pillardist=randint(100,361)
+        
         
         
         
@@ -203,6 +216,7 @@ class game:
             
             if(moveit==1):
                 herox+=3
+                heropointer+=3
                 backx-=1
             
             
@@ -253,9 +267,9 @@ class game:
                     moveit=1
                     time=0
                     
-                    colortest=gameDisplay.get_at((460+sticklength,heroy+30))
+                    colortest=gameDisplay.get_at((457+sticklength,heroy+30))
                     
-                    if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) or colortest[0]==255):
+                    if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) or (colortest[0]==255)):
                         herofallflag=1
                         
                 
@@ -356,7 +370,7 @@ class game:
             
             #test circles
             
-            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
             pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
             
@@ -374,33 +388,161 @@ class game:
                 
                 color=gameDisplay.get_at((herox+30,heroy+30))
                 
-                if(color[0]!=0 and color[0]!=1 and color[0]!=255):
+                if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) or (color[0]==255)):
                     moveit=0
                     pillarmoveflag=1
                     stickmove=1
+                    
+                    if(pillar1x>840):
+                        acc1=1
+                        acc2=0
+                        acc3=0
+                        pillarfast=pillar1x
+                        
+                    if(pillar2x>840):
+                        acc1=0
+                        acc2=1
+                        acc3=0
+                        pillarfast=pillar2x
+                        
+                    if(pillar3x>840):
+                        acc1=0
+                        acc2=0
+                        acc3=1
+                        pillarfast=pillar3x
+                        
+            
+            
+            
+            if(moveit==0 and pillarmoveflag==1):
+               
+                if(stickmove==1):
+                    stickx1-=speed
+                    stickx-=speed
+               
+                if(heropointer>=0):
+                  
+                    if(acc1==0):
+                        pillar1x-=(speed)
+                    if(acc2==0):
+                        pillar2x-=(speed)
+                    if(acc3==0):
+                        pillar3x-=(speed)
+                        
+                    herox-=speed
+                    heropointer-=speed
+                    #print "help"
+                        
+                if(abs(pillarfast-450)>=pillardist):    
+                    if(acc1==1):
+                        pillar1x-=(speed+2)
+                        pillarfast=pillar1x
+                    
+                    if(acc2==1):
+                        pillar2x-=(speed+2)
+                        pillarfast=pillar2x
+                    
+                    if(acc3==1):
+                        pillar3x-=(speed+2)
+                        pillarfast=pillar3x
+                    
+                    
+                    
+                
+                    
+                    
+                
+                
+                
+                if ((heropointer<=0) and (abs(pillarfast-450)<=pillardist)):
+                    
+                    print "check"
+                    
+                    pillardist=randint(50,250)
+                    score+=1
+                    
+                    pillar1x+=speed
+                    pillar2x+=speed
+                    pillar3x+=(speed)
+                    
+                    
+                    # re-initialization of the variables
+                    
+                    stickx1=stickx=455
+                    sticky1=sticky=472
+        
+                    anglenum=90
+                    angle=(pi/180)*anglenum
+        
+                    sticklength=0
+        
+                    time=0
+                    flag=0          #stick fall flag
+                    keypressflag=0
+        
+                    moveit=0  #hero move flag
+        
+                    herox=429
+                    heroy=442
+                    heropointer=0
+                    
+                    i=0
+                    j=0
+                    k=0
+        
+                    
+                    if(pillar1x<=330):
+                        pillar1x=randint(845,900)
+                        pillar1=pillarlist[randint(0,3)]
+        
+                    if(pillar2x<=330):
+                        pillar2x=randint(845,900)
+                        pillar2=pillarlist[randint(0,3)]
+                    
+                    if(pillar3x<=330):
+                        pillar3x=randint(845,900)
+                        pillar3=pillarlist[randint(0,3)]
+                    
+                    
+                    
+        
+                    herofall=0
+                    herofallflag=0
+        
+                    pillarmoveflag=0
+        
+                    stickmove=0
+        
+                    
+        
+                    pillarfound=0
+                    
+                    keyinit=0
                     
                     
                 
             
             #pillar movement condition check
             
-            pygame.draw.circle(gameDisplay,white,(462,478),3,2)
+            '''
+            
+            pygame.draw.circle(gameDisplay,white,(460,478),3,2)
             
             
             if(moveit==0 and pillarmoveflag==1):
                 
-                color=gameDisplay.get_at((462,478))
+                color=gameDisplay.get_at((460,478))
                 if((color[0]!=0 and color[0]!=1) or pillarfound==1):
                 
-                    pillar1x-=3
-                    pillar2x-=3
-                    pillar3x-=3
+                    pillar1x-=speed
+                    pillar2x-=speed
+                    pillar3x-=speed
                     
                     if(stickmove==1):
-                        stickx1-=3
-                        stickx-=3
+                        stickx1-=speed
+                        stickx-=speed
                     
-                    herox-=3
+                    herox-=speed
                     #print "help"
                     
                     
@@ -469,10 +611,13 @@ class game:
                     pillarfound=0
                     
                     keyinit=0
-                    
+            '''        
                     
             
-                    
+            
+            
+            #left and right black background patches
+                      
             pygame.draw.rect(gameDisplay,black,(0,0,349,768))    
                     
             pygame.draw.rect(gameDisplay,black,(840,0,693,768))
