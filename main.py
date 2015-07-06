@@ -162,7 +162,7 @@ class game:
         
         pillarfast=0
         
-        pillardist=randint(100,361)
+        pillardist=randint(50,250)
         
         
         
@@ -411,6 +411,24 @@ class game:
                         acc3=1
                         pillarfast=pillar3x
                         
+                        
+                    if(pillar1x>429 and pillar1x<840):
+                        #acc1=2
+                        pillar2nd=pillar1x
+                    
+                    if(pillar2x>429 and pillar2x<840):
+                        #acc2=2
+                        pillar2nd=pillar2x
+                        
+                    if(pillar3x>429 and pillar3x<840):
+                        #acc3=2
+                        pillar2nd=pillar3x 
+                        
+                        
+                    
+                    
+                    acc=abs((pillarfast-429-pillardist)/heropointer)
+            
             
             
             
@@ -433,17 +451,17 @@ class game:
                     heropointer-=speed
                     #print "help"
                         
-                if(abs(pillarfast-450)>=pillardist):    
+                #if(abs(pillarfast-450)>=pillardist):    
                     if(acc1==1):
-                        pillar1x-=(speed+2)
+                        pillar1x-=(acc)
                         pillarfast=pillar1x
                     
                     if(acc2==1):
-                        pillar2x-=(speed+2)
+                        pillar2x-=(acc)
                         pillarfast=pillar2x
                     
                     if(acc3==1):
-                        pillar3x-=(speed+2)
+                        pillar3x-=(acc)
                         pillarfast=pillar3x
                     
                     
@@ -453,8 +471,8 @@ class game:
                     
                 
                 
-                
-                if ((heropointer<=0) and (abs(pillarfast-450)<=pillardist)):
+                else:
+                #if ((heropointer<=0) and (abs(pillarfast-450)<=pillardist)):
                     
                     print "check"
                     
