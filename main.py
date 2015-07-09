@@ -80,22 +80,48 @@ class game:
         hero1=pygame.image.load("images/hero1.png")
         hero2=pygame.image.load("images/hero2.png")
         hero3=pygame.image.load("images/hero3.png")
+        
+        herodown=pygame.transform.flip(hero,False,True)
+        hero1down=pygame.transform.flip(hero1,False,True)
+        hero2down=pygame.transform.flip(hero2,False,True)
+        hero3down=pygame.transform.flip(hero3,False,True)
+        
+        
         stick=pygame.image.load("images/stick.png").convert()
-        background=pygame.image.load("images/background.png").convert()
+        #background=pygame.image.load("images/background.png").convert()
         alpha=pygame.image.load("images/alpha.png").convert()
         beta=pygame.image.load("images/beta.png").convert()
         gamma=pygame.image.load("images/gamma.png").convert()
         delta=pygame.image.load("images/delta.png").convert()
         
         
-        back1=pygame.image.load("background/back4.png").convert()
-        back1a=pygame.transform.scale(back1,(1280,720))
-        back1b=back1a
+        back1=pygame.image.load("background/back1.png").convert()
+        back1=pygame.transform.scale(back1,(1280,720))
+        
+        back2=pygame.image.load("background/back2.png").convert()
+        back2=pygame.transform.scale(back2,(1280,720))
+        
+        back3=pygame.image.load("background/back3.jpg").convert()
+        back3=pygame.transform.scale(back3,(1280,720))
+        
+        back4=pygame.image.load("background/back4.png").convert()
+        back4=pygame.transform.scale(back4,(1280,720))
+        
+        back5=pygame.image.load("background/back5.jpg").convert()
+        back5=pygame.transform.scale(back5,(1280,720))
+        
+        back6=pygame.image.load("background/back6.png").convert()
+        back6=pygame.transform.scale(back6,(1280,720))
+        
+        back7=pygame.image.load("background/back7.png").convert()
+        back7=pygame.transform.scale(back7,(1280,720))
         
         
         
+        backgroundlist=[back1,back2,back3,back4,back5,back6,back7]
         
-        
+        #back=backgroundlist[randint(0,6)]
+        back=back7
         
         #stickx1=455
         #sticky1=50
@@ -103,6 +129,9 @@ class game:
         herokicklist=[hero,herotr]
         
         herolist=[hero,hero1,hero2,hero3]
+        
+        herodownlist=[herodown,hero1down,hero2down,hero3down]
+       
         
         
         pillarlist=[alpha,beta,gamma,delta]
@@ -156,13 +185,55 @@ class game:
         
         keyinit=0
         
-        speed=4
+        speed=8
         
         acc1=acc2=acc3=0
         
         pillarfast=0
         
-        pillardist=randint(50,250)
+        pillardist=randint(60,260)
+        
+        stickgrowsound=0
+        
+        # Sound loads
+        
+        
+        pop1=pygame.mixer.Sound("sound/pop_1.ogg")
+        pop2=pygame.mixer.Sound("sound/pop_2.ogg")
+        
+        stickgrow=pygame.mixer.Sound("sound/stick_grow_loop.ogg")
+        
+        kick=pygame.mixer.Sound("sound/kick.ogg")
+        
+        landing=pygame.mixer.Sound("sound/fall.ogg")
+        
+        scoresound=pygame.mixer.Sound("sound/score.ogg")
+        
+        dead=pygame.mixer.Sound("sound/dead.ogg")
+        
+       
+        
+        
+        backx1=349
+        backx2=1630
+        
+        upsidedown=0
+        
+        keypress=0
+        
+        
+        if(pillar1x>429 and pillar1x<840):
+            #acc1=2
+            pillar2nd=pillar1x
+                    
+        if(pillar2x>429 and pillar2x<840):
+            #acc2=2
+            pillar2nd=pillar2x
+                        
+        if(pillar3x>429 and pillar3x<840):
+            #acc3=2
+            pillar2nd=pillar3x 
+        
         
         
         
@@ -184,9 +255,21 @@ class game:
             
                 
             gameDisplay.fill(white)
-            gameDisplay.blit(back1a,(250+backx,0))
-            #gameDisplay.blit(background,(350,0))
+            gameDisplay.blit(back,(backx1,0))
+            gameDisplay.blit(back,(backx2,0))
             
+            
+            
+            if(backx1<-1280):
+                backx1=1270
+            if(backx2<-1280):
+                backx2=1270
+                
+                
+                
+                
+                
+                
             
             i+=1
             if(i%4==0):
@@ -197,7 +280,31 @@ class game:
                 
                 
             if(moveit==1):    
-                gameDisplay.blit(herolist[j],(herox,heroy))
+                
+                if(upsidedown==0):
+                    gameDisplay.blit(herolist[j],(herox,heroy))
+                else:
+                    gameDisplay.blit(herodownlist[j],(herox,heroy+33))
+                
+            
+           
+            # Inverted hero collsion with pillar test
+            
+            
+            if(upsidedown==1 and herox+15>=pillar2nd): 
+                herofallflag=1
+                herofall=1
+                moveit=0
+                flag=1
+            
+            pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
+            
+            
+            #print upsidedown
+            
+            
+            
+                
             
             if(moveit==0):
                 
@@ -214,12 +321,18 @@ class game:
                     
                     
             
-            if(moveit==1):
-                herox+=3
-                heropointer+=3
-                backx-=1
+            if(moveit==1):          #hero moving right
+                herox+=5
+                heropointer+=5
+                backx1-=1
+                backx2-=1
             
             
+            if(herox>=845):
+                herofallflag=1
+                herofall=1
+                moveit=0
+                flag=1
            
             
             
@@ -258,7 +371,8 @@ class game:
                 
                 anglenum-=0.03*(time)*(time)
                 if(anglenum<=0):
-                    
+                    kick.stop()
+                    landing.play(0)
                     anglenum=0
                     sticky1=472
                     stickx1=stickx+sticklength
@@ -267,9 +381,9 @@ class game:
                     moveit=1
                     time=0
                     
-                    colortest=gameDisplay.get_at((457+sticklength,heroy+30))
+                    colortest=gameDisplay.get_at((457+sticklength,heroy+40))
                     
-                    if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) or (colortest[0]==255)):
+                    if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) ):
                         herofallflag=1
                         
                 
@@ -319,20 +433,66 @@ class game:
                 
                     keypressflag=1
                     keyinit=1
+                    stickgrowsound=1
             
             if(keypressflag==1):
                 
                 if event.type==pygame.KEYUP  and event.key==273:
                     flag=1
+                    
+                    stickgrow.stop()
+                    
+                    kick.play(0)
                     keypressflag=0
               
             
             
+            if(stickgrowsound==1):
+                
+                stickgrow.play(-1)
+                
+                
+            if(moveit==1):
+                
+                if event.type==pygame.KEYDOWN and event.key==273 and keypress==0:
+                #jump.play(0)
+                
+                    if(upsidedown==0 and herox+25<pillar2nd):
+                        upsidedown=1
+                    else:
+                        upsidedown=0
+                        
+                    keypress=1    
+                        
+                        
+                 
+                if event.type==pygame.KEYUP  and event.key==273:
+                        
+                    
+                        
+                    keypress=0
             
+            
+            
+            
+            
+            
+                
+                
+                
             
             if keypressflag==1:  
                 
-                sticky1-=5
+                stickgrowsound=0
+                if(sticky1>=0):
+                    sticky1-=5
+                    
+                    
+                    
+                    
+            
+            
+                
                 
                 
                 
@@ -384,11 +544,11 @@ class game:
                 
             
             #if hero has to stop
-            if((herox+30)>=457+sticklength and herofallflag==0):
+            if((herox+30)>=457+sticklength and herofallflag==0 and pillarmoveflag==0 and moveit==1):
                 
-                color=gameDisplay.get_at((herox+30,heroy+30))
+                color=gameDisplay.get_at((herox+30,heroy+40))
                 
-                if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) or (color[0]==255)):
+                if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) ):
                     moveit=0
                     pillarmoveflag=1
                     stickmove=1
@@ -424,11 +584,18 @@ class game:
                         #acc3=2
                         pillar2nd=pillar3x 
                         
-                        
                     
                     
-                    acc=abs((pillarfast-429-pillardist)/heropointer)
-            
+                    time=abs((heropointer)/speed)
+                    #print heropointer
+                    
+                    acc=abs(((pillarfast)-(429+pillardist))/time)
+                    
+                    #print str(((pillarfast)-(429+pillardist)))+str(heropointer)
+                    
+                    #print pillardist
+                    #print heropointer
+                    
             
             
             
@@ -474,9 +641,12 @@ class game:
                 else:
                 #if ((heropointer<=0) and (abs(pillarfast-450)<=pillardist)):
                     
-                    print "check"
+                    landing.stop()
+                    scoresound.stop()
+                    scoresound.play(0)
                     
-                    pillardist=randint(50,250)
+                    
+                    pillardist=randint(60,260)
                     score+=1
                     
                     pillar1x+=speed
@@ -509,19 +679,29 @@ class game:
                     k=0
         
                     
-                    if(pillar1x<=330):
-                        pillar1x=randint(845,900)
+                    if(pillar1x<=348):
+                        pillarfast=pillar1x=randint(845,900)
                         pillar1=pillarlist[randint(0,3)]
         
-                    if(pillar2x<=330):
-                        pillar2x=randint(845,900)
+                    if(pillar2x<=348):
+                        pillarfast=pillar2x=randint(845,900)
                         pillar2=pillarlist[randint(0,3)]
                     
-                    if(pillar3x<=330):
-                        pillar3x=randint(845,900)
+                    if(pillar3x<=348):
+                        pillarfast=pillar3x=randint(845,900)
                         pillar3=pillarlist[randint(0,3)]
                     
+                    if(pillar1x>429 and pillar1x<840):
+                        #acc1=2
+                        pillar2nd=pillar1x
                     
+                    if(pillar2x>429 and pillar2x<840):
+                        #acc2=2
+                        pillar2nd=pillar2x
+                        
+                    if(pillar3x>429 and pillar3x<840):
+                        #acc3=2
+                        pillar2nd=pillar3x 
                     
         
                     herofall=0
@@ -538,99 +718,10 @@ class game:
                     keyinit=0
                     
                     
-                
-            
-            #pillar movement condition check
-            
-            '''
-            
-            pygame.draw.circle(gameDisplay,white,(460,478),3,2)
-            
-            
-            if(moveit==0 and pillarmoveflag==1):
-                
-                color=gameDisplay.get_at((460,478))
-                if((color[0]!=0 and color[0]!=1) or pillarfound==1):
-                
-                    pillar1x-=speed
-                    pillar2x-=speed
-                    pillar3x-=speed
-                    
-                    if(stickmove==1):
-                        stickx1-=speed
-                        stickx-=speed
-                    
-                    herox-=speed
-                    #print "help"
-                    
-                    
-                else:
-                    pillarfound=1
-                    
                     
                     
                 
-                #next pillar reach criterion
-                
-                if(color[0]!=0 and color[0]!=1 and pillarfound==1):    
-                    pillarmoveflag=0
-                    
-                    score+=1
-                    
-                    
-                    # re-initialization of the variables
-                    
-                    stickx1=stickx=455
-                    sticky1=sticky=472
-        
-                    anglenum=90
-                    angle=(pi/180)*anglenum
-        
-                    sticklength=0
-        
-                    time=0
-                    flag=0          #stick fall flag
-                    keypressflag=0
-        
-                    moveit=0  #hero move flag
-        
-                    herox=429
-                    heroy=442
-        
-                    i=0
-                    j=0
-                    k=0
-        
-                    
-                    if(pillar1x<=300):
-                        pillar1x=randint(845,950)
-                        pillar1=pillarlist[randint(0,3)]
-        
-                    if(pillar2x<=300):
-                        pillar2x=randint(845,950)
-                        pillar2=pillarlist[randint(0,3)]
-                    
-                    if(pillar3x<=300):
-                        pillar3x=randint(845,950)
-                        pillar3=pillarlist[randint(0,3)]
-                    
-                    
-                    
-        
-                    herofall=0
-                    herofallflag=0
-        
-                    pillarmoveflag=0
-        
-                    stickmove=0
-        
-                    
-        
-                    pillarfound=0
-                    
-                    keyinit=0
-            '''        
-                    
+            
             
             
             
@@ -647,6 +738,13 @@ class game:
             if(herofall==1):
                 
                 heroy+=15
+                
+                if(heroy>770):
+                    
+                    landing.stop()
+                    dead.stop()
+                    dead.play()
+                    sys.exit()
             
             
             
