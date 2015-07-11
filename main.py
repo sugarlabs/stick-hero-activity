@@ -117,11 +117,15 @@ class game:
         back7=pygame.transform.scale(back7,(1280,720))
         
         
+        fruit=pygame.image.load("images/fruit.png").convert()
+        
+        
+        
         
         backgroundlist=[back1,back2,back3,back4,back5,back6,back7]
         
         #back=backgroundlist[randint(0,6)]
-        back=back7
+        back=back2
         
         #stickx1=455
         #sticky1=50
@@ -192,6 +196,7 @@ class game:
         pillarfast=0
         
         pillardist=randint(60,260)
+        lastpillardist=pillardist
         
         stickgrowsound=0
         
@@ -214,7 +219,7 @@ class game:
        
         
         
-        backx1=349
+        backx1=350
         backx2=1630
         
         upsidedown=0
@@ -234,9 +239,24 @@ class game:
             #acc3=2
             pillar2nd=pillar3x 
         
+        bouncedown=True
+        bounce=0
+        
+        fruitx=0
+        
+        
+        #if(pillardist>100):
+        #    fruitx=randint(470,470+pillardist-30)
         
         
         
+        
+        
+        
+        
+        
+        
+        # GAME LOOP BEGINS !!!
         
         while not crashed:
         #Gtk events
@@ -259,16 +279,47 @@ class game:
             gameDisplay.blit(back,(backx2,0))
             
             
+            #fruits bounce up-down
+            
+            if((pillar2nd-429)>100 and fruitx>=350 and fruitx!=0):
+                gameDisplay.blit(fruit,(fruitx,480+bounce))
+                
+            
+            if(bouncedown==True):
+                if(i%6==0):
+                    bounce+=1
+                    if(bounce>5):
+                        bouncedown=not(bouncedown)
+            else:
+                if(i%6==0):
+                    bounce-=1
+                    if(bounce<0):
+                        bouncedown=not(bouncedown)
+            
+            
+            
+            
+            
+            
+            #backgound frames roll-over
             
             if(backx1<-1280):
-                backx1=1270
+                #if not(back==back2):
+                    backx1=1270
+                #else:
+                #    backx1=1260
             if(backx2<-1280):
-                backx2=1270
+                #if not(back==back2):
+                    backx2=1270
+                #else:
+                #    backx2=1260
                 
                 
                 
                 
                 
+            if(i>30):
+                i=0
                 
             
             i+=1
@@ -616,6 +667,7 @@ class game:
                         
                     herox-=speed
                     heropointer-=speed
+                    fruitx-=speed
                     #print "help"
                         
                 #if(abs(pillarfast-450)>=pillardist):    
@@ -645,8 +697,14 @@ class game:
                     scoresound.stop()
                     scoresound.play(0)
                     
-                    
-                    pillardist=randint(60,260)
+                    if(lastpillardist<160):
+                        pillardist=randint(160,260)
+                        lastpillardist=pillardist
+                    else:
+                        pillardist=randint(60,160)
+                        lastpillardist=pillardist
+                        
+                        
                     score+=1
                     
                     pillar1x+=speed
@@ -718,6 +776,12 @@ class game:
                     keyinit=0
                     
                     
+                    #fruit placement
+                  
+                    if((pillar2nd-459)>100):
+                        fruitx=randint(470,pillar2nd-20)
+                        #print fruitx
+                    
                     
                     
                 
@@ -727,7 +791,7 @@ class game:
             
             #left and right black background patches
                       
-            pygame.draw.rect(gameDisplay,black,(0,0,349,768))    
+            pygame.draw.rect(gameDisplay,black,(0,0,350,768))    
                     
             pygame.draw.rect(gameDisplay,black,(840,0,693,768))
             
