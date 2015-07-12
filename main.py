@@ -67,6 +67,7 @@ class game:
             
             gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
             
+            
             #pygame.display.set_caption("Stick Hero")
             #gameicon=pygame.image.load('data/images/icon.png')
             #pygame.display.set_icon(gameicon)
@@ -77,6 +78,7 @@ class game:
         #herotr=hero
         herotr=pygame.transform.scale(hero,(30,26))
         
+        
         hero1=pygame.image.load("images/hero1.png")
         hero2=pygame.image.load("images/hero2.png")
         hero3=pygame.image.load("images/hero3.png")
@@ -86,6 +88,8 @@ class game:
         hero2down=pygame.transform.flip(hero2,False,True)
         hero3down=pygame.transform.flip(hero3,False,True)
         
+        scoreplate=pygame.image.load("images/scoreplate.png").convert()
+        scoreplate.set_alpha(50)
         
         stick=pygame.image.load("images/stick.png").convert()
         #background=pygame.image.load("images/background.png").convert()
@@ -215,7 +219,8 @@ class game:
         scoresound=pygame.mixer.Sound("sound/score.ogg")
         
         dead=pygame.mixer.Sound("sound/dead.ogg")
-        
+        kick=pygame.mixer.Sound("sound/kick.ogg")
+        rollupdown=pygame.mixer.Sound("sound/roll_up_down.ogg")
        
         
         
@@ -245,15 +250,23 @@ class game:
         fruitx=0
         
         fruitgot=False
+        fruitflag=0
         
         
-        #if(pillardist>100):
-        #    fruitx=randint(470,470+pillardist-30)
+        herod=33
         
+        fruitscore=7
+        score=7
         
+        font_path = "fonts/comicsans.ttf"
+        font_size = 40
+        font1= pygame.font.Font(font_path, font_size)
+        font2=pygame.font.Font("fonts/sans.ttf",25)
         
-        
-        
+        scoreshift=0
+        fruitscoreshift=0
+        shift1=1
+        shift2=1
         
         
         
@@ -279,11 +292,27 @@ class game:
             gameDisplay.fill(white)
             gameDisplay.blit(back,(backx1,0))
             gameDisplay.blit(back,(backx2,0))
+            gameDisplay.blit(fruit,(800,20))
+            
+            #scoreplate.set_alpha(20)
+            gameDisplay.blit(scoreplate,(540,40))
+            
+            
+            #score blitting
+            
+            
+            
+            
+            scores=font1.render(str(score),1,(255,255,255)) 
+            gameDisplay.blit(scores,(580+scoreshift,40))
+            fruitscores=font2.render(str(fruitscore),1,(0,0,0)) 
+            gameDisplay.blit(fruitscores,(770+fruitscoreshift,13))
+            
             
             
             #fruits bounce up-down
             
-            if((pillar2nd-429)>100 and fruitx>=429 and fruitx!=0 and not(fruitgot)):
+            if((pillar2nd-429)>80 and fruitx>=429 and fruitx!=0 and not(fruitgot)):
                 gameDisplay.blit(fruit,(fruitx,480+bounce))
                 
             
@@ -297,6 +326,29 @@ class game:
                     bounce-=1
                     if(bounce<0):
                         bouncedown=not(bouncedown)
+            
+            
+            
+            # Fruit vanish condition
+            
+            if(fruitflag==0 and herodownlist[j].get_rect(center=(herox+18,heroy+herod+10)).colliderect(fruit.get_rect(center=(fruitx+14,480+bounce+10)))):
+                fruitgot=not fruitgot
+                fruitflag=1
+                if(herofallflag!=1):
+                    fruitscore+=1
+            
+            
+            #if(upsidedown==1 and herox+15>=fruitx):
+            #    fruitgot=not fruitgot
+            
+                
+            
+            #pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
+            
+            
+            pygame.draw.circle(gameDisplay,black, (herox+18,heroy+10+33) ,3, 2)
+            
+            pygame.draw.circle(gameDisplay,black, (fruitx+13,480+bounce+10) ,3, 2)
             
             
             
@@ -335,9 +387,11 @@ class game:
             if(moveit==1):    
                 
                 if(upsidedown==0):
-                    gameDisplay.blit(herolist[j],(herox,heroy))
+                    herod=0
+                    gameDisplay.blit(herolist[j],(herox,heroy+herod))
                 else:
-                    gameDisplay.blit(herodownlist[j],(herox,heroy+33))
+                    herod=33
+                    gameDisplay.blit(herodownlist[j],(herox,heroy+herod))
                 
             
            
@@ -351,29 +405,11 @@ class game:
                 flag=1
                 
             
-            # Fruit vanish condition
             
-            if(herodownlist[j].get_rect(center=(herox+7,heroy+33+10)).colliderect(fruit.get_rect(center=(fruitx+9,480+bounce+5)))):
-                fruitgot=not fruitgot
-            
-            
-            #if(upsidedown==1 and herox+15>=fruitx):
-            #    fruitgot=not fruitgot
-            
-                
-            
-            #pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
-            
-            
-            pygame.draw.circle(gameDisplay,black, (herox+7,heroy+10+33) ,3, 2)
-            
-            pygame.draw.circle(gameDisplay,black, (fruitx+9,480+bounce+5) ,3, 2)
             
             
             #print upsidedown
-            
-            
-            
+                       
                 
             
             if(moveit==0):
@@ -511,6 +547,9 @@ class game:
                     flag=1
                     
                     stickgrow.stop()
+                    kick.stop()
+                    kick.play()
+                    
                     
                     kick.play(0)
                     keypressflag=0
@@ -526,7 +565,8 @@ class game:
                 
                 if event.type==pygame.KEYDOWN and event.key==273 and keypress==0:
                 #jump.play(0)
-                
+                                 
+                    rollupdown.play()
                     if(upsidedown==0 and herox+25<pillar2nd):
                         upsidedown=1
                     else:
@@ -537,7 +577,7 @@ class game:
                         
                  
                 if event.type==pygame.KEYUP  and event.key==273:
-                        
+                          
                     
                         
                     keypress=0
@@ -720,7 +760,7 @@ class game:
                     
                     
                     
-                    if(lastpillardist<160):
+                    if(lastpillardist<100):
                         pillardist=randint(160,260)
                         lastpillardist=pillardist
                     else:
@@ -728,7 +768,20 @@ class game:
                         lastpillardist=pillardist
                         
                         
-                    score+=1
+                    
+                    if(score<(10**shift1)-1):
+                        score+=1
+                    else:
+                        score+=1
+                        shift1+=1
+                        scoreshift-=10
+                    
+                    if not(fruitscore<(10**shift2)-1):
+                        
+                        fruitscore+=1
+                        shift2+=1
+                        fruitscoreshift-=4
+                    
                     
                     pillar1x+=speed
                     pillar2x+=speed
@@ -761,18 +814,32 @@ class game:
         
                     
                     fruitgot=False
+                    fruitflag=0
+                    
+                    if(pillar1==delta and pillar1x<429):
+                        pillarfast=pillar1x=randint(845,900)
+                        pillar1=pillarlist[randint(0,3)]
+                    
+                    if(pillar2==delta and pillar2x<429):
+                        pillarfast=pillar2x=randint(845,900)
+                        pillar2=pillarlist[randint(0,3)]
+                        
+                    if(pillar3==delta and pillar3x<429):
+                        pillarfast=pillar3x=randint(845,900)
+                        pillar3=pillarlist[randint(0,3)]    
                     
                     
                     
-                    if(pillar1x<=348):
+                    
+                    if(pillar1x<=350 and pillar1!=delta):
                         pillarfast=pillar1x=randint(845,900)
                         pillar1=pillarlist[randint(0,3)]
         
-                    if(pillar2x<=348):
+                    if(pillar2x<=350 and pillar2!=delta):
                         pillarfast=pillar2x=randint(845,900)
                         pillar2=pillarlist[randint(0,3)]
                     
-                    if(pillar3x<=348):
+                    if(pillar3x<=350 and pillar3!=delta):
                         pillarfast=pillar3x=randint(845,900)
                         pillar3=pillarlist[randint(0,3)]
                     
@@ -805,15 +872,15 @@ class game:
                     
                     #fruit placement
                   
-                    if((pillar2nd-459)>100):
-                        fruitx=randint(470,pillar2nd-20)
+                    if((pillar2nd-459)>80):
+                        fruitx=randint(470,pillar2nd-20-8)
                         #print fruitx
                     
                     
                     
                 
             
-            
+            #print pillar1.rect.topleft
             
             
             #left and right black background patches
