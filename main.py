@@ -124,8 +124,8 @@ class game:
         
         backgroundlist=[back1,back2,back3,back4,back5,back6,back7]
         
-        #back=backgroundlist[randint(0,6)]
-        back=back2
+        back=backgroundlist[randint(0,6)]
+        #back=back2
         
         #stickx1=455
         #sticky1=50
@@ -244,6 +244,8 @@ class game:
         
         fruitx=0
         
+        fruitgot=False
+        
         
         #if(pillardist>100):
         #    fruitx=randint(470,470+pillardist-30)
@@ -281,7 +283,7 @@ class game:
             
             #fruits bounce up-down
             
-            if((pillar2nd-429)>100 and fruitx>=350 and fruitx!=0):
+            if((pillar2nd-429)>100 and fruitx>=429 and fruitx!=0 and not(fruitgot)):
                 gameDisplay.blit(fruit,(fruitx,480+bounce))
                 
             
@@ -347,8 +349,25 @@ class game:
                 herofall=1
                 moveit=0
                 flag=1
+                
             
-            pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
+            # Fruit vanish condition
+            
+            if(herodownlist[j].get_rect(center=(herox+7,heroy+33+10)).colliderect(fruit.get_rect(center=(fruitx+9,480+bounce+5)))):
+                fruitgot=not fruitgot
+            
+            
+            #if(upsidedown==1 and herox+15>=fruitx):
+            #    fruitgot=not fruitgot
+            
+                
+            
+            #pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
+            
+            
+            pygame.draw.circle(gameDisplay,black, (herox+7,heroy+10+33) ,3, 2)
+            
+            pygame.draw.circle(gameDisplay,black, (fruitx+9,480+bounce+5) ,3, 2)
             
             
             #print upsidedown
@@ -581,7 +600,7 @@ class game:
             
             #test circles
             
-            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
             pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
             
@@ -697,6 +716,10 @@ class game:
                     scoresound.stop()
                     scoresound.play(0)
                     
+                    
+                    
+                    
+                    
                     if(lastpillardist<160):
                         pillardist=randint(160,260)
                         lastpillardist=pillardist
@@ -736,6 +759,10 @@ class game:
                     j=0
                     k=0
         
+                    
+                    fruitgot=False
+                    
+                    
                     
                     if(pillar1x<=348):
                         pillarfast=pillar1x=randint(845,900)
