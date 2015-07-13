@@ -35,7 +35,7 @@ from random import *
 
 
 
-class game:
+class welcomescreen:
 
     def make(self):
         
@@ -672,7 +672,7 @@ class game:
                 sticky1=sticky=472
             
             if((stickx1-stickx)!=0 or sticky1-sticky!=0):
-                pygame.draw.line(gameDisplay,black,(stickx1,sticky1),(stickx,sticky), 6)
+                pygame.draw.line(gameDisplay,black,(stickx1,sticky1),(stickx,sticky),width=1)
             
             
             
@@ -978,7 +978,7 @@ class game:
             
 
 if __name__ == "__main__":
-    g = game()
+    g = welcomescreen()
     g.make()         
 
             
