@@ -126,6 +126,39 @@ class game:
         
         
         
+        # BIRD FRAMES
+        
+        frame1=pygame.image.load("birds/1.png")
+        #frame1=pygame.transform.flip(frame1,True,False)
+        
+        frame2=pygame.image.load("birds/2.png")
+        #frame2=pygame.transform.flip(frame2,True,False)
+        
+        frame3=pygame.image.load("birds/3.png")
+        #frame3=pygame.transform.flip(frame3,True,False)
+        
+        frame4=pygame.image.load("birds/4.png")
+        #frame4=pygame.transform.flip(frame4,True,False)
+        
+        frame5=pygame.image.load("birds/5.png")
+        #frame5=pygame.transform.flip(frame5,True,False)
+        
+        frame6=pygame.image.load("birds/6.png")
+        #frame6=pygame.transform.flip(frame6,True,False)
+        
+        frame7=pygame.image.load("birds/7.png")
+        #frame7=pygame.transform.flip(frame7,True,False)
+        
+        frame8=pygame.image.load("birds/8.png")
+        #frame8=pygame.transform.flip(frame8,True,False)
+        
+        
+        birds=[frame1,frame2,frame3,frame4,frame5,frame6,frame7,frame8]
+        
+        
+        
+        
+        
         backgroundlist=[back1,back2,back3,back4,back5,back6,back7]
         
         back=backgroundlist[randint(0,6)]
@@ -224,6 +257,11 @@ class game:
         eating_fruit=pygame.mixer.Sound("sound/eating_fruit.ogg")
         perfectsound=pygame.mixer.Sound("sound/perfect.ogg")
         
+        flappy=pygame.mixer.Sound("sound/bird/bonus_loop_bird.ogg")
+        chichi=pygame.mixer.Sound("sound/bird/bonus_trigger_bird.ogg")
+        
+        
+        
         
         backx1=350
         backx2=1630
@@ -280,6 +318,24 @@ class game:
         perfectflag=0
         vanish=0
         perfect=0
+        b1=0
+        b2=2
+        b3=4
+        b4=6
+        
+        
+        
+        birdx=900
+        birdxslow=950
+        birdxfast=860
+        
+        
+        
+        birdgroupshow=0
+        birdsingleshow=0
+        birdmainshow=0
+        birdpickup=0
+        birdsound=0
         
         
         # GAME LOOP BEGINS !!!
@@ -310,6 +366,129 @@ class game:
             
             
             #score blitting
+            
+            
+            
+            
+            
+            
+            #Bird frames processing
+                
+            if(i%7==0):
+                b1+=1
+                if(b1==8):
+                    b1=0
+                    
+                b2+=1
+                if(b2==8):
+                    b2=0
+                    
+                b3+=1
+                if(b3==8):
+                    b3=0    
+                
+                b4+=1
+                if(b4==8):
+                    b4=0
+                    
+            
+            
+            if(birdgroupshow==1):        
+                    
+                gameDisplay.blit(pygame.transform.scale(birds[b1],(57,39)),(birdx+10,100))
+                gameDisplay.blit(pygame.transform.scale(birds[b2],(57-10,39-10)),(birdx-50,115))
+            
+            
+                gameDisplay.blit(pygame.transform.scale(birds[b3],(57-20,39-20)),(birdx,110+30))
+            
+            if(birdsingleshow==1):
+            
+                gameDisplay.blit(pygame.transform.scale(birds[b3],(57+10,39+10)),(birdxslow,110))
+            
+            
+            
+            
+            
+            
+            #Birds movement
+            
+            if(birdx>=300 and birdgroupshow==1):
+                birdx-=3
+            
+            if(birdxslow>=300 and birdsingleshow==1):
+                birdxslow-=2
+            
+            if(birdmainshow==1):
+                
+                birdxfast-=birdspeed
+            
+            
+            
+            #Birds coordinates updates
+            
+            
+            if(birdx<300):
+                birdx=900
+                birdgroupshow=0
+            
+            
+            if(birdxslow<300):
+                birdxslow=950
+                birdsingleshow=0
+                
+                
+            if(birdxfast<=300):
+                birdxfast=860
+                birdmainshow=0
+                
+            
+            
+            if(birdsingleshow==0 and i%18==0):
+                r=randint(0,99)
+                if(r%18==0):
+                    birdgroupshow=1
+                    birdsingleshow=1
+                    
+            
+            
+            
+            
+            
+            if(pygame.transform.scale(birds[b4],(57+30,39+20)).get_rect(center=(birdxfast+40,400+20)).colliderect(herolist[j].get_rect(center=(herox+18,heroy+herod+15)))):
+           
+                herox=birdxfast+30
+                birdpickup=1
+                
+                if(birdsound==0):
+                    birdsound=1
+                
+                
+                moveit=0
+               
+                if(herox<340):
+                   
+                    sys.exit()
+            
+            
+            
+            #pygame.draw.circle(gameDisplay,white, (birdxfast,400) ,3, 2)
+            
+            #pygame.draw.circle(gameDisplay,white, (herox+18,heroy+herod) ,3, 2)
+            
+            
+            
+            
+            if(birdsound==1):
+                birdsound=2
+                flappy.play(0)
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
@@ -377,9 +556,9 @@ class game:
             #pygame.draw.circle(gameDisplay,black, (herox+15,heroy+60) ,3, 2)
             
             
-            pygame.draw.circle(gameDisplay,black, (herox+18,heroy+10+33) ,3, 2)
+            #pygame.draw.circle(gameDisplay,black, (herox+18,heroy+10+33) ,3, 2)
             
-            pygame.draw.circle(gameDisplay,black, (fruitx+13,480+bounce+10) ,3, 2)
+            #pygame.draw.circle(gameDisplay,black, (fruitx+13,480+bounce+10) ,3, 2)
             
             
             
@@ -403,7 +582,7 @@ class game:
                 
                 
                 
-            if(i>30):
+            if(i>20):
                 i=0
                 
             
@@ -419,18 +598,30 @@ class game:
                 
                 if(upsidedown==0):
                     herod=0
-                    gameDisplay.blit(herolist[j],(herox,heroy+herod))
+                    gameDisplay.blit(herolist[j],(herox,heroy+herod-(birdpickup*5)))
                 else:
                     herod=33
                     gameDisplay.blit(herodownlist[j],(herox,heroy+herod))
                 
+            
+            
+            
+            
+            #Main bird display
+            
+            if(birdmainshow==1):
+            
+                gameDisplay.blit(pygame.transform.scale(birds[b4],(57+30,39+20)),(birdxfast,400))
+            
+            
+            
             
            
             # Inverted hero collsion with pillar test
             
             
             if(upsidedown==1 and herox+15>=pillar2nd): 
-                herofallflag=1
+                
                 herofall=1
                 moveit=0
                 flag=1
@@ -459,8 +650,8 @@ class game:
                     
             
             if(moveit==1):          #hero moving right
-                herox+=5
-                heropointer+=5
+                herox+=3
+                heropointer+=3
                 backx1-=1
                 backx2-=1
             
@@ -482,6 +673,16 @@ class game:
             gameDisplay.blit(pillar2,(pillar2x,470))
             
             gameDisplay.blit(pillar3,(pillar3x,470))
+            
+            
+            
+            
+            
+            
+            
+            #pygame.draw.circle(gameDisplay,white, (birdxfast+40,400+40) ,3, 2)
+            
+            #pygame.draw.circle(gameDisplay,white, (herox+18,heroy+herod+15) ,3, 2)
             
             
             
@@ -518,7 +719,17 @@ class game:
                     moveit=1
                     time=0
                     
-                    colortest=gameDisplay.get_at((457+sticklength,heroy+40))
+                    #Birds Speed calculation
+                    
+                    
+                    if(sticklength>170 and randint(0,2)==2):
+                        birdspeed=int((1680)/sticklength)
+                        birdmainshow=1
+                        chichi.play(0)
+                        
+                        
+                    
+                    colortest=gameDisplay.get_at((457+sticklength+2,heroy+40))
                     
                     if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) ):
                         herofallflag=1
@@ -601,11 +812,11 @@ class game:
                 
             if(moveit==1):
                 
-                if event.type==pygame.KEYDOWN and event.key==273 and keypress==0:
+                if event.type==pygame.KEYDOWN and event.key==273 and keypress==0 and herox+15<pillar2nd:
                 #jump.play(0)
                                  
                     rollupdown.play()
-                    if(upsidedown==0 and herox+25<pillar2nd):
+                    if(upsidedown==0 ):
                         upsidedown=1
                     else:
                         upsidedown=0
@@ -614,7 +825,7 @@ class game:
                         
                         
                  
-                if event.type==pygame.KEYUP  and event.key==273:
+                if event.type==pygame.KEYUP  and event.key==273 and herox+15<pillar2nd:
                           
                     
                         
@@ -678,8 +889,8 @@ class game:
             
             #test circles
             
-            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
-            pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
+            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            #pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
             
             
@@ -718,7 +929,9 @@ class game:
                         acc2=0
                         acc3=1
                         pillarfast=pillar3x
-                        
+                    
+                    
+                    '''
                         
                     if(pillar1x>429 and pillar1x<840):
                         #acc1=2
@@ -732,6 +945,8 @@ class game:
                         #acc3=2
                         pillar2nd=pillar3x 
                         
+                    '''
+                    
                     
                     
                     time=abs((heropointer)/speed)
@@ -803,7 +1018,7 @@ class game:
                         pillardist=randint(160,260)
                         lastpillardist=pillardist
                     else:
-                        pillardist=randint(60,160)
+                        pillardist=randint(100,160)
                         lastpillardist=pillardist
                         
                         
@@ -866,15 +1081,15 @@ class game:
                     fruitgot=False
                     fruitflag=0
                     
-                    if(pillar1==delta and pillar1x<400):
+                    if(pillar1==delta and pillar1x<415):
                         pillarfast=pillar1x=randint(845,900)
                         pillar1=pillarlist[randint(0,3)]
                     
-                    if(pillar2==delta and pillar2x<400):
+                    if(pillar2==delta and pillar2x<415):
                         pillarfast=pillar2x=randint(845,900)
                         pillar2=pillarlist[randint(0,3)]
                         
-                    if(pillar3==delta and pillar3x<400):
+                    if(pillar3==delta and pillar3x<415):
                         pillarfast=pillar3x=randint(845,900)
                         pillar3=pillarlist[randint(0,3)]    
                     
@@ -893,6 +1108,8 @@ class game:
                         pillarfast=pillar3x=randint(845,900)
                         pillar3=pillarlist[randint(0,3)]
                     
+                    
+                    
                     if(pillar1x>429 and pillar1x<840):
                         #acc1=2
                         pillar2nd=pillar1x
@@ -904,6 +1121,8 @@ class game:
                     if(pillar3x>429 and pillar3x<840):
                         #acc3=2
                         pillar2nd=pillar3x 
+                    
+                    
                     
         
                     herofall=0
