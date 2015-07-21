@@ -35,6 +35,53 @@ from random import *
 
 
 
+
+
+
+
+
+
+
+
+     
+pygame.init()
+sound=True
+        
+try:
+    pygame.mixer.init()
+except Exception, err:
+    sound=False
+    print 'error with sound', error
+            
+black=(0,0,0)
+white=(255,255,255)
+clock=pygame.time.Clock()
+timer=pygame.time.Clock()
+            
+crashed=False   
+disp_width = 600
+disp_height = 600
+            
+press=0    
+            
+gameDisplay=pygame.display.get_surface()
+        
+if not(gameDisplay):
+    info=pygame.display.Info()
+    gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
+            
+    pygame.display.set_caption("Make Them Fall")
+    #gameicon=pygame.image.load('data/images/icon.png')
+    #pygame.display.set_icon(gameicon)
+
+back=pygame.image.load('background/back6.jpg')
+
+
+
+
+
+
+
 class welcomescreen:
 
     def make(self,gameDisplay,back):
@@ -73,23 +120,47 @@ class welcomescreen:
             #pygame.display.set_icon(gameicon)
             
             
+        fruit=pygame.image.load("images/welcomescreen/fruit.png")
+        fruit=pygame.transform.scale(fruit,(40,40))
+        
+        scoreplate=pygame.image.load("images/scoreplate.png").convert()
+        scoreplate=pygame.transform.scale(scoreplate,(40,40))
+        
+        scoreplate.set_alpha(100)
+        
+        play=pygame.image.load
+        
+        help=pygame.image.load("images/help.png")
+        help=pygame.transform.scale(help,(40,40))
+        
+        
         hero=pygame.image.load("images/hero.png")
+        hero=pygame.transform.scale(hero,(38,38))
+        
+        play=pygame.image.load("images/play.png")
+        play=pygame.transform.scale(play,(170,170))
+        
+        beta=pygame.image.load("images/alpha.png")
+        
         
         #herotr=hero
-        herotr=pygame.transform.scale(hero,(30,26))
         
         
-        hero1=pygame.image.load("images/hero1.png")
+        #herotr=pygame.transform.scale(hero,(30,26))
         
-        font_path = "fonts/comicsans.ttf"
-        font_size = 40
+        
+        #hero1=pygame.image.load("images/hero1.png")
+        
+        font_path = "fonts/sans.ttf"
+        font_size = 70
         font1= pygame.font.Font(font_path, font_size)
         font2=pygame.font.Font("fonts/sans.ttf",25)
         font3=pygame.font.Font("fonts/sans.ttf",40)
         font4=pygame.font.Font("fonts/sans.ttf",20)
         
-        
-        
+        down=1
+        bounce=0
+        i=0
         
         
         
@@ -110,28 +181,85 @@ class welcomescreen:
             
             #print event
             
+            i+=1
+            
+            if(i>20):
+                i=0
+                
+            
+            if(i%3==0):
+                if(down==1):
+                    bounce+=1
+                    if(bounce>8):
+                        down=0
+                if(down==0):
+                    bounce-=1
+                    if(bounce<0):
+                        down=1
+                
+            
                 
             gameDisplay.fill(white)
-            gameDisplay.blit(back,(backx1,0))
+            gameDisplay.blit(back,(350,0))
             
-            gameDisplay.blit(fruit,(800,20))
+            
             
             #scoreplate.set_alpha(20)
-            gameDisplay.blit(scoreplate,(540,40))
+            #gameDisplay.blit(scoreplate,(540,40))
             
-            
+            gameDisplay.blit(help,(380,20))
             #score blitting
+            gameDisplay.blit(play,(510,200+bounce))
+            
+            gameDisplay.blit(beta,(540,470))
+            
+            gameDisplay.blit(hero,(568,432))
+            
+            gameDisplay.blit(scoreplate,(780,40))
+            
+            gameDisplay.blit(fruit,(780,20))
+            
+            head1=font1.render("STICK",1,(black)) 
+            gameDisplay.blit(head1,(500,20))
             
             
-            '''
-            
-            scores=font1.render(str(score),1,(255,255,255)) 
-            gameDisplay.blit(scores,(580+scoreshift,40))
-            fruitscores=font2.render(str(fruitscore),1,(0,0,0)) 
-            gameDisplay.blit(fruitscores,(770+fruitscoreshift,13))
-            '''
+            head2=font1.render("HERO",1,(black)) 
+            gameDisplay.blit(head2,(510,80))
             
             
+            
+            
+            
+            if fruit.get_rect(center=(790,20)).collidepoint(mos_x,mos_y):
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    
+                    test=0
+            
+                
+                
+                
+                
+                
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0
+            
+            
+            
+            
+            
+            
+            
+            #fruitscores=font2.render(str(fruitscore),1,(0,0,0)) 
+            #gameDisplay.blit(fruitscores,(770+fruitscoreshift,13))
+            
+            
+            
+            
+            #left and right black background patches
+                      
+            pygame.draw.rect(gameDisplay,black,(0,0,350,768))    
+                    
+            pygame.draw.rect(gameDisplay,black,(840,0,693,768))
             
             
             
@@ -164,6 +292,6 @@ class welcomescreen:
 
 if __name__ == "__main__":
     g = welcomescreen()
-    g.make()         
+    g.make(gameDisplay,back)         
 
             

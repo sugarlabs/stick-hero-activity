@@ -266,7 +266,7 @@ class game:
         backx1=350
         backx2=1630
         
-        upsidedown=0
+        upsidedown=False
         
         keypress=0
         
@@ -596,7 +596,7 @@ class game:
                 
             if(moveit==1):    
                 
-                if(upsidedown==0):
+                if(upsidedown==False):
                     herod=0
                     gameDisplay.blit(herolist[j],(herox,heroy+herod-(birdpickup*5)))
                 else:
@@ -620,7 +620,7 @@ class game:
             # Inverted hero collsion with pillar test
             
             
-            if(upsidedown==1 and herox+15>=pillar2nd): 
+            if(upsidedown==True and herox+15>=pillar2nd): 
                 
                 herofall=1
                 moveit=0
@@ -810,26 +810,23 @@ class game:
                 stickgrow.play(-1)
                 
                 
-            if(moveit==1):
+            if(moveit==1 and herox+15<pillar2nd):
                 
-                if event.type==pygame.KEYDOWN and event.key==273 and keypress==0 and herox+15<pillar2nd:
+                if event.type==pygame.KEYDOWN and event.key==273 and keypress==0 :
                 #jump.play(0)
                                  
                     rollupdown.play()
-                    if(upsidedown==0 ):
-                        upsidedown=1
-                    else:
-                        upsidedown=0
+                    upsidedown=not upsidedown
                         
                     keypress=1    
                         
                         
                  
-                if event.type==pygame.KEYUP  and event.key==273 and herox+15<pillar2nd:
+            if event.type==pygame.KEYUP  and event.key==273:
                           
                     
                         
-                    keypress=0
+                keypress=0
             
             
             
@@ -889,8 +886,8 @@ class game:
             
             #test circles
             
-            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
-            #pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
             
             
@@ -1132,7 +1129,7 @@ class game:
         
                     stickmove=0
         
-                    
+                    keypress=0
         
                     pillarfound=0
                     
