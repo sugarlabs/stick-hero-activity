@@ -84,7 +84,7 @@ fruitscore=0
 
 class welcomescreen:
 
-    def make(self,gameDisplay,back,fruitscore):
+    def make(self,gameDisplay,back,score):
         
         pygame.init()
         sound=True
@@ -115,32 +115,16 @@ class welcomescreen:
             gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
             
             
-            #pygame.display.set_caption("Stick Hero")
-            #gameicon=pygame.image.load('data/images/icon.png')
-            #pygame.display.set_icon(gameicon)
             
-            
-        fruit=pygame.image.load("images/welcomescreen/fruit.png")
-        fruit=pygame.transform.scale(fruit,(40,40))
-        
-        scoreplate=pygame.image.load("images/scoreplate.png").convert()
-        scoreplate=pygame.transform.scale(scoreplate,(40,50))
-        
-        scoreplate.set_alpha(100)
-        
-        play=pygame.image.load
-        
-        help=pygame.image.load("images/help.png")
-        help=pygame.transform.scale(help,(40,40))
         
         
-        hero=pygame.image.load("images/hero.png")
-        hero=pygame.transform.scale(hero,(38,38))
+        replay=pygame.image.load("images/scorescreen/replay.png")
+        replay=pygame.transform.scale(replay,(104,102))
+        scoreplate=pygame.image.load("images/scorescreen/scoreplate.png")
+        scoreplate=pygame.transform.scale(scoreplate,(230+130,140+80))
         
-        play=pygame.image.load("images/play.png")
-        play=pygame.transform.scale(play,(170,170))
+        home=pygame.image.load("images/scorescreen/home.png")
         
-        beta=pygame.image.load("images/alpha.png")
         
         
         #herotr=hero
@@ -207,41 +191,25 @@ class welcomescreen:
             #scoreplate.set_alpha(20)
             #gameDisplay.blit(scoreplate,(540,40))
             
-            gameDisplay.blit(help,(380,20))
-            #score blitting
-            gameDisplay.blit(play,(510,200+bounce))
+            gameDisplay.blit(scoreplate,(420,200))
             
-            gameDisplay.blit(beta,(540,470))
             
-            gameDisplay.blit(hero,(568,432))
+            gameDisplay.blit(home,(380+60+25,400+50))
             
+            gameDisplay.blit(replay,(600+60-25,400+50))
             
             
             
             #score check
             
             
-            if fruit.get_rect(center=(790+20,20+20)).collidepoint(mos_x,mos_y):
-                if(pygame.mouse.get_pressed())[0]==1 and press==0:
-                    
-                    gameDisplay.blit(scoreplate,(780,40))
-                    #gameDisplay.blit(scoreplate,(780,60))
-                    
-                    head1=font2.render(str(fruitscore),1,(white)) 
-                    gameDisplay.blit(head1,(785,60))
-                        
-                      
-                
-                
-                
-                if event.type==pygame.MOUSEBUTTONUP:
-                    press=0
             
             
             
             # GAME START
             
-            if play.get_rect(center=(510+85,200+bounce+85)).collidepoint(mos_x,mos_y):
+            
+            if replay.get_rect(center=(380+60+52+25,400+50+51)).collidepoint(mos_x,mos_y):
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     
                     return
@@ -254,9 +222,11 @@ class welcomescreen:
             
             
             
+            
+            
             # Help menu
             
-            if help.get_rect(center=(380+20,20+20)).collidepoint(mos_x,mos_y):
+            if home.get_rect(center=(600+60+52-25,400+50+51)).collidepoint(mos_x,mos_y):
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     
                     sys.exit()
@@ -271,8 +241,7 @@ class welcomescreen:
             
             
             
-            
-            gameDisplay.blit(fruit,(780,20))
+            #gameDisplay.blit(fruit,(780,20))
             
             head1=font1.render("STICK",1,(black)) 
             gameDisplay.blit(head1,(500,20))

@@ -1168,6 +1168,11 @@ class game:
                     landing.stop()
                     dead.stop()
                     dead.play()
+                    rect = pygame.Rect(350, 0, 490, 768)
+                    sub = screen.subsurface(rect)
+                    pygame.image.save(sub, "screenshot.jpg")
+                    
+                    
                     sys.exit()
             
             
