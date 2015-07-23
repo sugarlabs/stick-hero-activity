@@ -39,8 +39,8 @@ from random import *
 
 
 
-
 '''
+
      
 pygame.init()
 sound=True
@@ -75,17 +75,17 @@ if not(gameDisplay):
 back=pygame.image.load('background/back6.jpg')
 fruitscore=0
 score=0
+
+
+
+
 '''
 
 
 
+class rulescreen:
 
-
-
-
-class scorescreen:
-
-    def make(self,gameDisplay,score,fruitscore):
+    def make(self,gameDisplay):
         
         pygame.init()
         sound=True
@@ -119,76 +119,63 @@ class scorescreen:
             
         
         
-        replay=pygame.image.load("images/scorescreen/replay.png")
-        replay=pygame.transform.scale(replay,(104,102))
-        scoreplate=pygame.image.load("images/scorescreen/scoreplate.png")
-        scoreplate=pygame.transform.scale(scoreplate,(230+130,140+80))
+        frame1=pygame.image.load("images/rulescreen/ruleframes/frame1.png")
+        frame2=pygame.image.load("images/rulescreen/ruleframes/frame2.png")
+        frame3=pygame.image.load("images/rulescreen/ruleframes/frame3.png")
+        frame4=pygame.image.load("images/rulescreen/ruleframes/frame4.png")
+        frame5=pygame.image.load("images/rulescreen/ruleframes/frame5.png")
+        frame6=pygame.image.load("images/rulescreen/ruleframes/frame6.png")
+        frame7=pygame.image.load("images/rulescreen/ruleframes/frame7.png")
+        frame8=pygame.image.load("images/rulescreen/ruleframes/frame8.png")
+        frame9=pygame.image.load("images/rulescreen/ruleframes/frame9.png")
+        frame10=pygame.image.load("images/rulescreen/ruleframes/frame10.png")
+        frame11=pygame.image.load("images/rulescreen/ruleframes/frame11.png")
+        frame12=pygame.image.load("images/rulescreen/ruleframes/frame12.png")
+        frame13=pygame.image.load("images/rulescreen/ruleframes/frame13.png")
+        frame14=pygame.image.load("images/rulescreen/ruleframes/frame14.png")
+        frame15=pygame.image.load("images/rulescreen/ruleframes/frame15.png")
+        frame16=pygame.image.load("images/rulescreen/ruleframes/frame16.png")
+        frame17=pygame.image.load("images/rulescreen/ruleframes/frame17.png")
+        frame18=pygame.image.load("images/rulescreen/ruleframes/frame18.png")
+        frame19=pygame.image.load("images/rulescreen/ruleframes/frame19.png")
+        frame20=pygame.image.load("images/rulescreen/ruleframes/frame20.png")
+        frame21=pygame.image.load("images/rulescreen/ruleframes/frame21.png")
+        frame22=pygame.image.load("images/rulescreen/ruleframes/frame22.png")
+        frame23=pygame.image.load("images/rulescreen/ruleframes/frame23.png")
+        frame24=pygame.image.load("images/rulescreen/ruleframes/frame24.png")
+        frame25=pygame.image.load("images/rulescreen/ruleframes/frame25.png")
+        
+        play=pygame.image.load("images/rulescreen/back.png")
+        
+        button=pygame.image.load("images/rulescreen/button.png")
+        
+        hide=pygame.image.load("images/rulescreen/hideboard.png").convert()
         
         
-        plate=pygame.image.load("images/scoreplate.png").convert()
-        plate=pygame.transform.scale(plate,(340,90))
-        plate.set_alpha(220)
         
         
-        home=pygame.image.load("images/scorescreen/home.png")
-        back=pygame.image.load("screenshot/screenshot.png")
         
-        back.set_alpha(225)
+        framelist=[frame1,frame2,frame3,frame4,frame5,frame6,frame7,frame8,frame9,frame10,frame11,frame12,frame13,frame14,frame15,frame16,frame17,frame18,frame19,frame20,frame21,frame22,frame23,frame24,frame25]
         
-        
-        #herotr=hero
-        
-        
-        #herotr=pygame.transform.scale(hero,(30,26))
-        
-        
-        #hero1=pygame.image.load("images/hero1.png")
         
         font_path = "fonts/sans.ttf"
-        font_size = 55
+        font_size = 20
         font1= pygame.font.Font(font_path, font_size)
         font2=pygame.font.Font("fonts/sans.ttf",30)
         font3=pygame.font.Font("fonts/sans.ttf",40)
         font4=pygame.font.Font("fonts/sans.ttf",20)
         
-        down=1
-        bounce=0
-        i=0
-        
-        keypressflag=0
-        
-        maxscore=0
-        fruitmaxscore=0
-        
-        
-        with open('score.pkl', 'rb') as input:    #REading
-            maxscore = pickle.load(input)
-            fruitmaxscore=pickle.load(input)
-        
-        
-        
-        if(fruitscore>fruitmaxscore):
-            fruitmaxscore=fruitscore
-            with open('score.pkl', 'wb') as output:
-                pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
-                pickle.dump(fruitmaxscore, output, pickle.HIGHEST_PROTOCOL)
-                
-        if(score>maxscore):
-            maxscore=score
-            with open('score.pkl', 'wb') as output:
-                pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
-                pickle.dump(fruitmaxscore, output, pickle.HIGHEST_PROTOCOL)
         
         
         
         
+        chichi=pygame.mixer.Sound("sound/bird/bonus_trigger_bird.ogg")
+        eating_fruit=pygame.mixer.Sound("sound/eating_fruit.ogg")
+        perfectsound=pygame.mixer.Sound("sound/perfect.ogg")
         
-        
-        
-        
-        
-        
-        
+        i=k=0
+        press=0
+        flag1=flag2=flag3=0
         
         
         # GAME LOOP BEGINS !!!
@@ -210,64 +197,56 @@ class scorescreen:
             
             i+=1
             
-            if(i>20):
+            if(i>30):
                 i=0
                 
             
-            if(i%3==0):
-                if(down==1):
-                    bounce+=1
-                    if(bounce>8):
-                        down=0
-                if(down==0):
-                    bounce-=1
-                    if(bounce<0):
-                        down=1
+            
                 
             
                 
-            gameDisplay.fill(white)
-            gameDisplay.blit(back,(350,0))
+            #gameDisplay.fill(white)
+            
+            if(i==30):
+                k+=1
+                if(k==25):
+                    k=0
+                    flag1=flag2=flag3=0
+            
+            gameDisplay.blit(pygame.transform.scale(framelist[k],(491,768)),(350,0))
+            
+            if(k==18 and flag1==0):
+                chichi.play(0)
+                flag1=1
+                
+                
+            if(k==16 and flag2==0):
+                perfectsound.play(0)
+                flag2=1
+                
+            
+            if(k==7 and flag3==0):
+                eating_fruit.play(0)
+                flag3=1
             
             
             
-            gameDisplay.blit(plate,(430,40))
-            
-            head1=font1.render("GAME OVER!",1,(white)) 
-            gameDisplay.blit(head1,(440,40))
-            '''
-            
-            head2=font1.render("HERO",1,(black)) 
-            gameDisplay.blit(head2,(510,80))
-            
-            '''
             
             
-            gameDisplay.blit(scoreplate,(420,200))
+            head1=font1.render("To roll hero upside-down use UP arrow key",1,(white)) 
+            gameDisplay.blit(head1,(400,100))
+            
+            gameDisplay.blit(button,(540,140))
             
             
-            gameDisplay.blit(home,(380+60+25,400+50))
-            
-            gameDisplay.blit(replay,(600+60-25,400+50))
+            gameDisplay.blit(hide,(400,600))
+            gameDisplay.blit(play,(500,600))
             
             
             
-            #score check
             
-            
-            
-            scores=font2.render(str(score),1,black)
-            gameDisplay.blit(scores,(575,250))
-            
-            maxscores=font2.render(str(maxscore),1,black)
-            gameDisplay.blit(maxscores,(575,350))
-            
-            
-            # GAME START
-            
-            
-            if home.get_rect(center=(380+60+52+25,400+50+51)).collidepoint(mos_x,mos_y):
-                gameDisplay.blit(pygame.transform.scale(home,(108,106)),(380+60+25-2,400+50-2))
+            if play.get_rect(center=(500+92,600+33)).collidepoint(mos_x,mos_y):
+                gameDisplay.blit(pygame.transform.scale(play,(189,70)),(500-2,600-2))
                 
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     
@@ -278,56 +257,6 @@ class scorescreen:
                 if event.type==pygame.MOUSEBUTTONUP:
                     press=0
             
-            
-            
-            
-            
-            
-            # Help menu
-            
-            if replay.get_rect(center=(600+60+52-25,400+50+51)).collidepoint(mos_x,mos_y):
-                gameDisplay.blit(pygame.transform.scale(replay,(108,106)),(600+60-25-2,400+50-2))
-                
-                
-                
-                
-                if(pygame.mouse.get_pressed())[0]==1 and press==0:
-                    
-                    return 1
-                
-                
-                
-                if event.type==pygame.MOUSEBUTTONUP:
-                    press=0
-            
-            
-            
-            
-            
-            
-            #gameDisplay.blit(fruit,(780,20))
-            
-            
-            if event.type==pygame.KEYDOWN and event.key==273:
-                #jump.play(0)
-                
-                    keypressflag=1
-                    return 1
-           
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            #fruitscores=font2.render(str(fruitscore),1,(0,0,0)) 
-            #gameDisplay.blit(fruitscores,(770+fruitscoreshift,13))
             
             
             
@@ -366,10 +295,10 @@ class scorescreen:
             pygame.quit()
             sys.exit()
 
-'''            
+'''          
 
 if __name__ == "__main__":
     g = scorescreen()
-    g.make(gameDisplay,score,fruitscore)         
+    g.make(gameDisplay)         
 '''
           

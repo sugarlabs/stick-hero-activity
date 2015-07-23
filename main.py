@@ -36,6 +36,8 @@ from random import *
 from scorescreen import *
 from welcomescreen import *
 
+from rules import *
+
 
 
 

@@ -33,6 +33,8 @@ from math import *
 
 from random import *
 
+from rules import *
+
 
 
 
@@ -279,7 +281,11 @@ class welcomescreen:
             if help.get_rect(center=(380+20,20+20)).collidepoint(mos_x,mos_y):
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     
-                    sys.exit()
+                    a=rulescreen()
+                    catch=a.make(gameDisplay)
+                    
+                    if(catch==0):
+                        return 2
                 
                 
                 
