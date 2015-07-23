@@ -75,8 +75,8 @@ class game:
             
             
             pygame.display.set_caption("Stick Hero")
-            #gameicon=pygame.image.load('data/images/icon.png')
-            #pygame.display.set_icon(gameicon)
+            gameicon=pygame.image.load('images/icon.png')
+            pygame.display.set_icon(gameicon)
             
             
         hero=pygame.image.load("images/hero.png")
@@ -977,8 +977,8 @@ class game:
             
             #test circles
             
-            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
-            pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
+            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
+            #pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
             
             
             
@@ -1445,7 +1445,8 @@ class game:
         
                         
                             
-            pygame.draw.circle(gameDisplay,white,(pillar2nd,700) ,3, 2)        
+            
+            #pygame.draw.circle(gameDisplay,white,(pillar2nd,700) ,3, 2)        
                     
                     
             

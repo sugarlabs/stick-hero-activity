@@ -117,7 +117,7 @@ class welcomescreen:
             gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
             
             
-            #pygame.display.set_caption("Stick Hero")
+            pygame.display.set_caption("Stick Hero")
             #gameicon=pygame.image.load('data/images/icon.png')
             #pygame.display.set_icon(gameicon)
             
