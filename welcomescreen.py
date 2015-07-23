@@ -42,7 +42,7 @@ from random import *
 
 
 
-
+'''
      
 pygame.init()
 sound=True
@@ -76,7 +76,7 @@ if not(gameDisplay):
 
 back=pygame.image.load('background/back6.jpg')
 fruitscore=0
-
+'''
 
 
 
@@ -84,7 +84,7 @@ fruitscore=0
 
 class welcomescreen:
 
-    def make(self,gameDisplay,back,fruitscore):
+    def make(self,gameDisplay,back):
         
         pygame.init()
         sound=True
@@ -162,6 +162,26 @@ class welcomescreen:
         bounce=0
         i=0
         
+        maxscore=0
+        fruitmaxscore=0
+        
+        
+        if os.path.getsize("score.pkl") == 0:
+            
+            with open('score.pkl', 'wb') as output:
+                pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(fruitmaxscore, output, pickle.HIGHEST_PROTOCOL)
+        
+        
+        
+        
+        with open('score.pkl', 'rb') as input:    #REading
+            maxscore = pickle.load(input)
+            fruitmaxscore=pickle.load(input)
+        
+        
+        
+        
         
         
         # GAME LOOP BEGINS !!!
@@ -227,7 +247,7 @@ class welcomescreen:
                     gameDisplay.blit(scoreplate,(780,40))
                     #gameDisplay.blit(scoreplate,(780,60))
                     
-                    head1=font2.render(str(fruitscore),1,(white)) 
+                    head1=font2.render(str(fruitmaxscore),1,(white)) 
                     gameDisplay.blit(head1,(785,60))
                         
                       
@@ -244,7 +264,7 @@ class welcomescreen:
             if play.get_rect(center=(510+85,200+bounce+85)).collidepoint(mos_x,mos_y):
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     
-                    return
+                    return 2
                 
                 
                 
@@ -334,8 +354,11 @@ class welcomescreen:
             sys.exit()
             
 
+
+'''
+
 if __name__ == "__main__":
     g = welcomescreen()
     g.make(gameDisplay,back,fruitscore)         
-
+'''
             
