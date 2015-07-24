@@ -85,7 +85,7 @@ score=0
 
 class scorescreen:
 
-    def make(self,gameDisplay,score,fruitscore):
+    def make(self,gameDisplay,back,score,fruitscore):
         
         pygame.init()
         sound=True
@@ -131,8 +131,9 @@ class scorescreen:
         
         
         home=pygame.image.load("images/scorescreen/home.png")
-        back=pygame.image.load("screenshot/screenshot.png")
+        #back=pygame.image.load("screenshot/screenshot.png")
         
+        back.convert()
         back.set_alpha(225)
         
         
@@ -198,10 +199,17 @@ class scorescreen:
             
             while gtk.events_pending():
                 gtk.main_iteration()
-            event=pygame.event.poll()
+            for event in pygame.event.get():
             #totaltime+=timer.tick()
-            if event.type == pygame.QUIT:
-                crashed=True
+                if event.type == pygame.QUIT:
+                    crashed=True
+                    
+                #event=pygame.event.poll()
+                if event.type==pygame.KEYDOWN and event.key==273:
+                #jump.play(0)
+                
+                        
+                    return 1    
                 
             
             mos_x,mos_y=pygame.mouse.get_pos() 
@@ -266,6 +274,10 @@ class scorescreen:
             # GAME START
             
             
+            
+            
+            
+            
             if home.get_rect(center=(380+60+52+25,400+50+51)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(home,(108,106)),(380+60+25-2,400+50-2))
                 
@@ -297,24 +309,23 @@ class scorescreen:
                 
                 
                 
-                if event.type==pygame.MOUSEBUTTONUP:
-                    press=0
-            
-            
+                
+                
             
             
             
             
             #gameDisplay.blit(fruit,(780,20))
             
-            
+            '''
+            event=pygame.event.poll():
             if event.type==pygame.KEYDOWN and event.key==273:
                 #jump.play(0)
                 
-                    keypressflag=1
-                    return 1
-           
+                    
+                return 1
             
+            '''
             
             
             

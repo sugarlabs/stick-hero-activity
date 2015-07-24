@@ -193,10 +193,10 @@ class welcomescreen:
             
             while gtk.events_pending():
                 gtk.main_iteration()
-            event=pygame.event.poll()
+            for event in pygame.event.get():
             #totaltime+=timer.tick()
-            if event.type == pygame.QUIT:
-                crashed=True
+                if event.type == pygame.QUIT:
+                    crashed=True
                 
             
             mos_x,mos_y=pygame.mouse.get_pos() 
@@ -269,12 +269,12 @@ class welcomescreen:
                     return 2
                 
                 
-                
+                '''
                 if event.type==pygame.MOUSEBUTTONUP:
                     press=0
             
-            
-            
+                '''
+                
             
             # Help menu
             
@@ -287,11 +287,11 @@ class welcomescreen:
                     if(catch==0):
                         return 2
                 
-                
+                '''
                 
                 if event.type==pygame.MOUSEBUTTONUP:
                     press=0
-            
+                '''
             
             
             

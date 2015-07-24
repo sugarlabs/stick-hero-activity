@@ -43,7 +43,7 @@ from rules import *
 
 class game:
 
-    def run(self):
+    def make(self):
         
         pygame.init()
         sound=True
@@ -386,10 +386,10 @@ class game:
             
             while gtk.events_pending():
                 gtk.main_iteration()
-            event=pygame.event.poll()
+            for event in pygame.event.get():
             #totaltime+=timer.tick()
-            if event.type == pygame.QUIT:
-                crashed=True
+                if event.type == pygame.QUIT:
+                    crashed=True
                 
             
             mos_x,mos_y=pygame.mouse.get_pos() 
@@ -977,8 +977,8 @@ class game:
             
             #test circles
             
-            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,3, 2)
-            #pygame.draw.circle(gameDisplay,white, (457+sticklength,heroy+30) ,3, 2)
+            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,2, 2)
+            pygame.draw.circle(gameDisplay,white, (457+sticklength+2,heroy+30) ,2, 2)
             
             
             
@@ -991,9 +991,9 @@ class game:
                 
             
             #if hero has to stop
-            if((herox+30)>=457+sticklength and herofallflag==0 and moveit==1):
+            if((herox+30)>=457+sticklength and herofallflag==0 and moveit==1 and heroy<768):
                 
-                color=gameDisplay.get_at((herox+30+2,heroy+40))
+                color=gameDisplay.get_at((herox+30+4,heroy+40))
                 
                 if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) ):
                     moveit=0
@@ -1097,7 +1097,7 @@ class game:
                     scoresound.stop()
                     scoresound.play(0)
                     
-                    
+                    #print "hello"
                     
                     vanish=0
                     
@@ -1285,12 +1285,12 @@ class game:
                     landing.stop()
                     dead.stop()
                     dead.play()
-                    rect = pygame.Rect(350, 0, 490, 768)
-                    sub = gameDisplay.subsurface(rect)
-                    pygame.image.save(sub, "screenshot/screenshot.png")
+                    #rect = pygame.Rect(350, 0, 490, 768)
+                    #sub = gameDisplay.subsurface(rect)
+                    #pygame.image.save(sub, "screenshot/screenshot.png")
                     
                     a=scorescreen()
-                    catch=a.make(gameDisplay,score,fruitscore)
+                    catch=a.make(gameDisplay,back,score,fruitscore)
                     
                     
                     
@@ -1475,6 +1475,6 @@ class game:
 
 if __name__ == "__main__":
     g = game()
-    g.run()         
+    g.make()         
 
             
