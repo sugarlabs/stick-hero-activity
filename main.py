@@ -977,8 +977,8 @@ class game:
             
             #test circles
             
-            pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,2, 2)
-            pygame.draw.circle(gameDisplay,white, (457+sticklength+2,heroy+30) ,2, 2)
+            #pygame.draw.circle(gameDisplay,white, (herox+30,heroy+30) ,2, 2)
+            #pygame.draw.circle(gameDisplay,white, (457+sticklength+2,heroy+30) ,2, 2)
             
             
             
