@@ -802,7 +802,7 @@ class game:
                         
                         
                     
-                    colortest=gameDisplay.get_at((457+sticklength+2,heroy+40))
+                    colortest=gameDisplay.get_at((457+sticklength,heroy+40))
                     
                     if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) ):
                         herofallflag=1
@@ -993,7 +993,7 @@ class game:
             #if hero has to stop
             if((herox+30)>=457+sticklength and herofallflag==0 and moveit==1 and heroy<768):
                 
-                color=gameDisplay.get_at((herox+30+4,heroy+40))
+                color=gameDisplay.get_at((herox+30,heroy+40))
                 
                 if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) ):
                     moveit=0
