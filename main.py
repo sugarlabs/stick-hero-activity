@@ -257,7 +257,7 @@ class game:
         
         pillar1=alpha
         pillar2=beta
-        pillar3=pillarlist[randint(0,3)]
+        pillar3=pillarlist[randint(0,2)]
         
         
         
@@ -802,7 +802,7 @@ class game:
                         
                         
                     
-                    colortest=gameDisplay.get_at((457+sticklength,heroy+40))
+                    colortest=gameDisplay.get_at((457+sticklength+2,heroy+40))
                     
                     if not((colortest[0]==0 and colortest[1]==0 and colortest[2]==0) or (colortest[0]==1 and colortest[1]==1 and colortest[2]==1) ):
                         herofallflag=1
@@ -993,7 +993,7 @@ class game:
             #if hero has to stop
             if((herox+30)>=457+sticklength and herofallflag==0 and moveit==1 and heroy<768):
                 
-                color=gameDisplay.get_at((herox+30,heroy+40))
+                color=gameDisplay.get_at((herox+30+4,heroy+40))
                 
                 if not((color[0]==0 and color[1]==0 and color[2]==0) or (color[0]==1 and color[1]==1 and color[2]==1) ):
                     moveit=0
@@ -1201,17 +1201,17 @@ class game:
                 
                 if(pillar1==delta and pillar1x<415):
                     pillarfast=pillar1x=randint(845,900)
-                    pillar1=pillarlist[randint(0,3)]
+                    pillar1=pillarlist[randint(0,2)]
                     flagchk1=1
                     
                 if(pillar2==delta and pillar2x<415):
                     pillarfast=pillar2x=randint(845,900)
-                    pillar2=pillarlist[randint(0,3)]
+                    pillar2=pillarlist[randint(0,2)]
                     flagchk2=1
                         
                 if(pillar3==delta and pillar3x<415):
                     pillarfast=pillar3x=randint(845,900)
-                    pillar3=pillarlist[randint(0,3)]    
+                    pillar3=pillarlist[randint(0,2)]    
                     flagchk3=1
                     
                     
@@ -1219,15 +1219,15 @@ class game:
                     
                 if(pillar1x<=348 and flagchk1!=1):
                     pillarfast=pillar1x=randint(845,900)
-                    pillar1=pillarlist[randint(0,3)]
+                    pillar1=pillarlist[randint(0,2)]
         
                 if(pillar2x<=348 and flagchk2!=1):
                     pillarfast=pillar2x=randint(845,900)
-                    pillar2=pillarlist[randint(0,3)]
+                    pillar2=pillarlist[randint(0,2)]
                     
                 if(pillar3x<=348 and flagchk3!=1):
                     pillarfast=pillar3x=randint(845,900)
-                    pillar3=pillarlist[randint(0,3)]
+                    pillar3=pillarlist[randint(0,2)]
                     
                     
                 # 2nd PILLAR DETECTION
@@ -1330,7 +1330,7 @@ class game:
         
                         pillar1=alpha
                         pillar2=beta
-                        pillar3=pillarlist[randint(0,3)]
+                        pillar3=pillarlist[randint(0,2)]
         
         
         
