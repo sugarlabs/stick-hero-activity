@@ -201,15 +201,16 @@ class scorescreen:
                 gtk.main_iteration()
             for event in pygame.event.get():
             #totaltime+=timer.tick()
-                if event.type == pygame.QUIT:
-                    crashed=True
-                    
-                #event=pygame.event.poll()
-                if event.type==pygame.KEYDOWN and event.key==273:
+                if event.type==pygame.KEYDOWN:
                 #jump.play(0)
                 
                         
                     return 1    
+                if event.type == pygame.QUIT:
+                    crashed=True
+                    
+                #event=pygame.event.poll()
+                
                 
             
             mos_x,mos_y=pygame.mouse.get_pos() 
