@@ -449,9 +449,9 @@ class game:
                 birdsound = 2
                 flappy.play(0)
 
-            scores = font1.render(_(str(score)), 1, (255, 255, 255))
+            scores = font1.render(str(score), 1, (255, 255, 255))
             gameDisplay.blit(scores, (580 + scoreshift, 40))
-            fruitscores = font2.render(_(str(fruitscore)), 1, (0, 0, 0))
+            fruitscores = font2.render(str(fruitscore), 1, (0, 0, 0))
             gameDisplay.blit(fruitscores, (770 + fruitscoreshift, 13))
 
             if(perfect == 1):

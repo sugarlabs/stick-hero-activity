@@ -164,10 +164,10 @@ class scorescreen:
 
             # score check
 
-            scores = font2.render(_(str(score)), 1, black)
+            scores = font2.render(str(score), 1, black)
             gameDisplay.blit(scores, (575, 250))
 
-            maxscores = font2.render(_(str(maxscore)), 1, black)
+            maxscores = font2.render(str(maxscore), 1, black)
             gameDisplay.blit(maxscores, (575, 350))
 
             # GAME START
