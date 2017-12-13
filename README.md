@@ -1,5 +1,5 @@
 # Stick-Hero
-An arcade game Sitick Man for Sugar.
+An arcade game for Sugar.
 
 # Installation of dependencies(Through terminal)
 
