@@ -1,17 +1,57 @@
-# Stick-Hero
-An arcade game for Sugar.
+What is this?
+=============
 
-# Installation of dependencies(Through terminal)
+Stick Hero is an arcade game for the Sugar desktop.
 
-## Linux
-* Open terminal and type the following commands :
-```bash
-sudo apt-get install libgtk-3-dev
-sudo apt-get install python-pygame
+How to use?
+===========
+
+Stick-Hero is part of the Sugar desktop.  Please refer to;
+
+* [How to Get Sugar on sugarlabs.org](https://sugarlabs.org/),
+* [How to use Sugar](https://help.sugarlabs.org/),
+* [Download Stick Hero using Browse](https://activities.sugarlabs.org/), search for `Stick Hero`, then download, and;
+* Refer the 'How to play' section inside the activity
+
+How to upgrade?
+===============
+
+On Sugar desktop systems;
+* use [My Settings](https://help.sugarlabs.org/en/my_settings.html), [Software Update](https://help.sugarlabs.org/en/my_settings.html#software-update), or;
+* use Browse to open [activities.sugarlabs.org](https://activities.sugarlabs.org/), search for `Stick Hero`, then download.
+
+How to run?
+=================
+
+Stick Hero depends on Python, PyGTK and PyGame.
+
+Stick Hero is started by [Sugar](https://github.com/sugarlabs/sugar).
+
+Stick Hero is not packaged by Debian and Ubuntu distributions.  
+On Ubuntu systems these required dependencies (`python-gtk2-dev` and
+`python-pygame`) need to be manually installed.
+
+
+**Running on Ubuntu**
+- Install the dependencies - 
+```
+sudo apt install python-gtk2-dev python-pygame
 ```
 
-# How to run? (In terminal)
-* Open terminal and type the following command to run :
-```bash
+- Clone the repo and run-
+```
+git clone https://github.com/sugarlabs/stick-hero-activity.git
+cd stick-hero-activity
 python main.py
+```
+
+**Running inside Sugar**
+
+- Open Terminal activity and change to the Stick Hero activity directory
+```
+cd activities\StickHero.activity
+```
+- To run
+```
+sugar-activity .
 ```
