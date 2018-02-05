@@ -289,6 +289,9 @@ class game:
 
         fruitscore = 0
         score = 0
+        
+        if os.path.exists("score.pkl")==False:
+            open('score.pkl','w+')
 
         if os.path.getsize("score.pkl") == 0:
 

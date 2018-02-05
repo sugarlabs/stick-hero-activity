@@ -26,7 +26,7 @@ class Activity(activity.Activity):
         self.set_canvas(self.game.canvas)
         self.game.canvas.grab_focus()        
         self.build_toolbar()
-
+       
     def build_toolbar(self):
 
         toolbar_box = ToolbarBox()
