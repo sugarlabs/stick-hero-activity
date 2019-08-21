@@ -29,8 +29,9 @@ import pygame
 import sys
 from gettext import gettext as _
 
-from math import *
+from sugar3.activity.activity import get_activity_root
 
+from math import *
 from random import *
 
 from scorescreen import *
@@ -290,16 +291,17 @@ class game:
         fruitscore = 0
         score = 0
         
-        if os.path.exists("score.pkl")==False:
-            open('score.pkl','w+')
+        score_path = get_activity_root() + '/instance' + '/score.pkl'
+        if os.path.exists(score_path) is False:
+            open(score_path,'w+')
 
-        if os.path.getsize("score.pkl") == 0:
+        if os.path.getsize(score_path) == 0:
 
-            with open('score.pkl', 'wb') as output:
+            with open(score_path, 'wb') as output:
                 pickle.dump(0, output, pickle.HIGHEST_PROTOCOL)
                 pickle.dump(0, output, pickle.HIGHEST_PROTOCOL)
 
-        with open('score.pkl', 'rb') as input:  # REading
+        with open(score_path, 'rb') as input:  # REading
             fruitscore = pickle.load(input)
             fruitscore = pickle.load(input)
 
