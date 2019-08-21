@@ -97,7 +97,7 @@ class scorescreen:
 
         maxscore = 0
         fruitmaxscore = 0
-        score_path = get_activity_root() + '/instance' + '/score.pkl'
+        score_path = os.path.join(get_activity_root(), 'instance', 'score.pkl')
 
         with open(score_path, 'rb') as input:  # REading
             maxscore = pickle.load(input)
