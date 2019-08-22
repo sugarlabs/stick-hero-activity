@@ -291,7 +291,7 @@ class game:
         fruitscore = 0
         score = 0
         
-        score_path = os.path.join(get_activity_root(), 'instance', 'score.pkl')
+        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
         if not os.path.exists(score_path):
             open(score_path,'w+')
 
