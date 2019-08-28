@@ -83,7 +83,7 @@ class scorescreen:
         back.set_alpha(225)
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 55
+        font_size = 50
         font1 = pygame.font.Font(font_path, font_size)
         font2 = pygame.font.Font("fonts/Arimo.ttf", 30)
         font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
@@ -158,7 +158,7 @@ class scorescreen:
             gameDisplay.blit(plate, (430, 40))
 
             head1 = font1.render(_("GAME OVER!"), 1, (white))
-            gameDisplay.blit(head1, (440, 40))
+            gameDisplay.blit(head1, (440, 50))
 
             gameDisplay.blit(scoreplate, (420, 200))
 
