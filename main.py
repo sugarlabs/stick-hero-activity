@@ -42,23 +42,16 @@ from rules import *
 
 class game:
 
-    def make(self):
+    def run(self):
 
-        pygame.init()
         sound = True
-
-        try:
-            pygame.mixer.init()
-        except Exception, err:
-            sound = False
-            print 'error with sound', err
 
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
         timer = pygame.time.Clock()
 
-        crashed = False
+        self.crashed = False
         disp_width = 600
         disp_height = 600
 
@@ -338,23 +331,24 @@ class game:
 
         # GAME LOOP BEGINS !!!
 
-        while not crashed:
+        while not self.crashed:
             # Gtk events
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            for event in pygame.event.get():
-                # totaltime+=timer.tick()
-                if event.type == pygame.QUIT:
-                    crashed = True
 
+            event = pygame.event.poll()
+            # totaltime+=timer.tick()
+            if event.type == pygame.QUIT:
+                return
+            
             mos_x, mos_y = pygame.mouse.get_pos()
 
             # print "hello"
 
             if(catch == 0):
                 b = welcomescreen()
-                catch = b.make(gameDisplay, back)
+                catch = b.make(gameDisplay, back, self)
 
             gameDisplay.fill(white)
             gameDisplay.blit(back, (backx1, 0))
@@ -1033,7 +1027,7 @@ class game:
                     #pygame.image.save(sub, "screenshot/screenshot.png")
 
                     a = scorescreen()
-                    catch = a.make(gameDisplay, back, score, fruitscore)
+                    catch = a.make(gameDisplay, back, score, fruitscore, self)
 
                     if(catch == 1):
 
@@ -1168,21 +1162,6 @@ class game:
             pygame.display.update()
             clock.tick(60)
 
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
-
-
 if __name__ == "__main__":
     g = game()
-    g.make()
+    g.run()

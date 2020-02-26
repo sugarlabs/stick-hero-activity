@@ -37,23 +37,15 @@ from random import *
 
 class scorescreen:
 
-    def make(self, gameDisplay, back, score, fruitscore):
+    def make(self, gameDisplay, back, score, fruitscore, mainGame):
 
-        pygame.init()
         sound = True
-
-        try:
-            pygame.mixer.init()
-        except Exception, err:
-            sound = False
-            print 'error with sound', err
 
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
         timer = pygame.time.Clock()
 
-        crashed = False
         disp_width = 600
         disp_height = 600
 
@@ -117,21 +109,18 @@ class scorescreen:
 
         # GAME LOOP BEGINS !!!
 
-        while not crashed:
+        while not mainGame.crashed:
             # Gtk events
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            for event in pygame.event.get():
-                # totaltime+=timer.tick()
-                if event.type == pygame.KEYDOWN:
-                    # jump.play(0)
-
-                    return 1
-                if event.type == pygame.QUIT:
-                    crashed = True
-
-                # event=pygame.event.poll()
+            event = pygame.event.poll()
+            # totaltime+=timer.tick()
+            if event.type == pygame.KEYDOWN:
+                # jump.play(0)
+                return 1
+            if event.type == pygame.QUIT:
+                return
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -203,17 +192,3 @@ class scorescreen:
 
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
