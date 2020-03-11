@@ -338,8 +338,10 @@ class game:
                 Gtk.main_iteration()
 
             event = pygame.event.poll()
-            # totaltime+=timer.tick()
-            if event.type == pygame.QUIT:
+                
+            if event == pygame.NOEVENT:
+                continue
+            if event == pygame.QUIT:
                 return
             
             mos_x, mos_y = pygame.mouse.get_pos()
