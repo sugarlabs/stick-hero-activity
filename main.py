@@ -337,12 +337,12 @@ class game:
             while Gtk.events_pending():
                 Gtk.main_iteration()
 
-            event = pygame.event.poll()
-                
-            if event == pygame.NOEVENT:
-                continue
-            if event == pygame.QUIT:
-                return
+            event = pygame.event.Event(pygame.NOEVENT)
+
+            for event in pygame.event.get():
+                # totaltime+=timer.tick()
+                if event.type == pygame.QUIT:
+                    crashed = True
             
             mos_x, mos_y = pygame.mouse.get_pos()
 
