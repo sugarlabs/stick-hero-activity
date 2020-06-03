@@ -31,12 +31,23 @@ import sys
 from math import *
 from random import *
 
+SHIFT_CORRECTOR = 45
 
 class rulescreen:
 
+    global display_init
+
+    def display_init():
+        pygame.init()
+        global scale_x, scale_y
+        gameDisplay = pygame.display.get_surface()
+        w, h = gameDisplay.get_width() , gameDisplay.get_height()
+        scale_x = w / 1280.0
+        scale_y = h / 720.0
+        return gameDisplay
+
     def make(self, gameDisplay):
 
-        pygame.init()
         sound = True
 
         try:
@@ -57,7 +68,6 @@ class rulescreen:
         press = 0
 
         info = pygame.display.Info()
-        gameDisplay = pygame.display.get_surface()
 
         if not(gameDisplay):
 
@@ -100,11 +110,11 @@ class rulescreen:
                      frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24, frame25]
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 20
+        font_size = int(sx(20))
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 30)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(sx(30)))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(sx(40)))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(sx(20)))
 
         chichi = pygame.mixer.Sound("sound/bird/bonus_trigger_bird.ogg")
         eating_fruit = pygame.mixer.Sound("sound/eating_fruit.ogg")
@@ -143,8 +153,7 @@ class rulescreen:
                     k = 0
                     flag1 = flag2 = flag3 = 0
 
-            gameDisplay.blit(pygame.transform.scale(
-                framelist[k], (491, 768)), (350, 0))
+            gameDisplay.blit(pygame.transform.scale(framelist[k], (int(sx(491)), int(sy(768)))), (sx(350,True), 0))
 
             if(k == 18 and flag1 == 0):
                 chichi.play(0)
@@ -160,19 +169,19 @@ class rulescreen:
 
             head1 = font1.render(
                 "To roll hero upside-down use UP arrow key", 1, (white))
-            gameDisplay.blit(head1, (400, 100))
+            gameDisplay.blit(head1, (sx(400, 1), sy(100)))
 
-            gameDisplay.blit(button, (540, 140))
+            gameDisplay.blit(button, (sx(550), sy(140)))
 
-            gameDisplay.blit(hide, (400, 600))
-            gameDisplay.blit(play, (500, 600))
+            gameDisplay.blit(hide, (sx(400, 1), sy(600)))
+            gameDisplay.blit(pygame.transform.scale(
+                    play, (189, 70)), (sx(500), sy(600)))
 
-            if play.get_rect(center=(500 + 92, 600 + 33)).collidepoint(mos_x, mos_y):
+            if play.get_rect(center=(sx(500 + 92), sy(600 + 33))).collidepoint(mos_x, mos_y):
                 gameDisplay.blit(pygame.transform.scale(
-                    play, (189, 70)), (500 - 2, 600 - 2))
+                    play, (189, 70)), (sx(500 - 2), sy(600 - 2)))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-
                     return 0
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -180,9 +189,9 @@ class rulescreen:
 
             # left and right black background patches
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, sx(350, 1), sy(768)))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, (sx(839, 1), 0, sx(693), sy(768)))
 
             pygame.display.update()
             clock.tick(60)
@@ -201,3 +210,25 @@ class rulescreen:
         if crashed == True:
             pygame.quit()
             sys.exit()
+
+    global sx, sy, scale_img
+
+    # sx is used to scale the x-coordinate
+    def sx(coord, shift=0):
+        if shift:
+        # shift=1 is passed when a shift is expected
+            return (coord + SHIFT_CORRECTOR) * scale_x
+        else:
+            return coord * scale_x
+
+    # sy is used to scale the y-coordinate
+    def sy(coord):
+        return coord * scale_y
+
+    def scale_img(filepath):
+        image = pygame.image.load(filepath)
+        sizex, sizey = image.get_rect().size
+        image = \
+            pygame.transform.scale(image,
+                                   (int(sizex * scale_x), int(sizey * scale_y)))
+        return image

@@ -44,7 +44,7 @@ class game:
 
     def make(self):
 
-        pygame.init()
+        gameDisplay = display_init()
         sound = True
 
         try:
@@ -65,7 +65,6 @@ class game:
         press = 0
 
         info = pygame.display.Info()
-        gameDisplay = pygame.display.get_surface()
 
         if not(gameDisplay):
 
@@ -76,53 +75,53 @@ class game:
             gameicon = pygame.image.load('images/icon.png')
             pygame.display.set_icon(gameicon)
 
-        hero = pygame.image.load("images/hero.png")
+        # Functions sx(coord, shift), sy(coord) and scale_img(image)
+        # defined in rules.py
+        # sx(), sy() and scale_img() are used to scale appropriately
 
-        # herotr=hero
-        herotr = pygame.transform.scale(hero, (30, 26))
 
-        hero1 = pygame.image.load("images/hero1.png")
-        hero2 = pygame.image.load("images/hero2.png")
-        hero3 = pygame.image.load("images/hero3.png")
+        hero = scale_img("images/hero.png")
+        herotr = hero
+
+        hero1 = scale_img("images/hero1.png")
+        hero2 = scale_img("images/hero2.png")
+        hero3 = scale_img("images/hero3.png")
 
         herodown = pygame.transform.flip(hero, False, True)
         hero1down = pygame.transform.flip(hero1, False, True)
         hero2down = pygame.transform.flip(hero2, False, True)
         hero3down = pygame.transform.flip(hero3, False, True)
 
-        scoreplate = pygame.image.load("images/scoreplate.png").convert()
+        scoreplate = scale_img("images/scoreplate.png").convert()
         scoreplate.set_alpha(50)
 
-        stick = pygame.image.load("images/stick.png").convert()
+        stick = scale_img("images/stick.png").convert()
         # background=pygame.image.load("images/background.png").convert()
-        alpha = pygame.image.load("images/alpha.png").convert()
-        beta = pygame.image.load("images/beta.png").convert()
-        gamma = pygame.image.load("images/gamma.png").convert()
-        delta = pygame.image.load("images/delta.png").convert()
-
+        alpha = scale_img("images/alpha.png").convert()
+        beta = scale_img("images/beta.png").convert()
+        gamma = scale_img("images/gamma.png").convert()
+        delta = scale_img("images/delta.png").convert()
         back1 = pygame.image.load("background/back1.png").convert()
-        back1 = pygame.transform.scale(back1, (1280, 720))
-
+        back1 = pygame.transform.scale(back1, (int(sx(1280)), int(sy(720))))
         back2 = pygame.image.load("background/back2.png").convert()
-        back2 = pygame.transform.scale(back2, (1280, 720))
+        back2 = pygame.transform.scale(back2, (int(sx(1280)), int(sy(720))))
 
         back3 = pygame.image.load("background/back3.jpg").convert()
-        back3 = pygame.transform.scale(back3, (1280, 720))
+        back3 = pygame.transform.scale(back3, (int(sx(1280)), int(sy(720))))
 
         back4 = pygame.image.load("background/back4.png").convert()
-        back4 = pygame.transform.scale(back4, (1280, 720))
+        back4 = pygame.transform.scale(back4, (int(sx(1280)), int(sy(720))))
 
         back5 = pygame.image.load("background/back5.jpg").convert()
-        back5 = pygame.transform.scale(back5, (1280, 720))
+        back5 = pygame.transform.scale(back5, (int(sx(1280)), int(sy(720))))
 
         back6 = pygame.image.load("background/back6.jpg").convert()
-        back6 = pygame.transform.scale(back6, (1280, 720))
+        back6 = pygame.transform.scale(back6, (int(sx(1280)), int(sy(720))))
 
         back7 = pygame.image.load("background/back7.png").convert()
-        back7 = pygame.transform.scale(back7, (1280, 720))
+        back7 = pygame.transform.scale(back7, (int(sx(1280)), int(sy(720))))
 
-        fruit = pygame.image.load("images/fruit.png").convert()
-
+        fruit = scale_img("images/fruit.png").convert()
         # BIRD FRAMES
 
         frame1 = pygame.image.load("birds/1.png")
@@ -191,16 +190,16 @@ class game:
         chichi = pygame.mixer.Sound("sound/bird/bonus_trigger_bird.ogg")
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 40
+        font_size = int(sx(40))
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 25)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(sx(25)))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(sx(40)))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(sx(20)))
 
         # VARIABLE INITIALIZATION
 
-        stickx1 = stickx = 455
-        sticky1 = sticky = 472
+        stickx1 = stickx = sx(455, 1)
+        sticky1 = sticky = sy(472)
 
         anglenum = 90
         angle = (pi / 180) * anglenum
@@ -213,8 +212,8 @@ class game:
 
         moveit = 0  # hero move flag
 
-        herox = 429
-        heroy = 442
+        herox = sx(429, 1)
+        heroy = sy(442)
 
         heropointer = 0
 
@@ -222,10 +221,10 @@ class game:
         j = 0
         k = 0
 
-        pillar1x = 355
-        msgx = pillar2x = 650
+        pillar1x = sx(355, 1)
+        msgx = pillar2x = sx(650, 1)
 
-        pillar3x = randint(845, 900)
+        pillar3x = randint(int(sx(845, 1)), int(sx(900, 1)))
 
         pillar1 = alpha
         pillar2 = beta
@@ -246,35 +245,35 @@ class game:
 
         keyinit = 0
 
-        speed = 8
+        speed = sx(8)
 
         acc1 = acc2 = acc3 = 0
 
         pillarfast = 0
 
-        pillardist = randint(60, 260)
+        pillardist = randint(int(sx(60, 1)), int(sx(260, 1)))
         lastpillardist = pillardist
 
         stickgrowsound = 0
 
         ext = 0
 
-        backx1 = 350
-        backx2 = 1630
+        backx1 = sx(350, 1)
+        backx2 = sx(1630, 1)
 
         upsidedown = False
 
         keypress = 0
 
-        if(pillar1x > 429 and pillar1x < 840):
+        if(pillar1x > (sx(429, 1)) and pillar1x < (sx(840, 1))):
             # acc1=2
             pillar2nd = pillar1x
 
-        if(pillar2x > 429 and pillar2x < 840):
+        if(pillar2x > (sx(429, 1)) and pillar2x < (sx(840, 1))):
             # acc2=2
             pillar2nd = pillar2x
 
-        if(pillar3x > 429 and pillar3x < 840):
+        if(pillar3x > (sx(429, 1)) and pillar3x < (sx(840, 1))):
             # acc3=2
             pillar2nd = pillar3x
 
@@ -286,7 +285,7 @@ class game:
         fruitgot = False
         fruitflag = 0
 
-        herod = 33
+        herod = sy(33)
 
         fruitscore = 0
         score = 0
@@ -318,9 +317,9 @@ class game:
         b3 = 4
         b4 = 6
 
-        birdx = 900
-        birdxslow = 950
-        birdxfast = 860
+        birdx = sx(900, 1)
+        birdxslow = sx(950, 1)
+        birdxfast = sx(860, 1)
 
         birdgroupshow = 0
         birdsingleshow = 0
@@ -359,10 +358,10 @@ class game:
             gameDisplay.fill(white)
             gameDisplay.blit(back, (backx1, 0))
             gameDisplay.blit(back, (backx2, 0))
-            gameDisplay.blit(fruit, (800, 20))
+            gameDisplay.blit(fruit, (sx(800, 1), sy(20)))
 
             # scoreplate.set_alpha(20)
-            gameDisplay.blit(scoreplate, (540, 40))
+            gameDisplay.blit(scoreplate, (sx(540, 1), sy(40)))
 
             # score blitting
 
@@ -388,25 +387,25 @@ class game:
             if(birdgroupshow == 1):
 
                 gameDisplay.blit(pygame.transform.scale(
-                    birds[b1], (57, 39)), (birdx + 10, 100))
+                    birds[b1], (int(sx(57)), int(sy(39)))), (birdx + sx(10), sy(100)))
                 gameDisplay.blit(pygame.transform.scale(
-                    birds[b2], (57 - 10, 39 - 10)), (birdx - 50, 115))
+                    birds[b2], (int(sx(57 - 10)), int(sy(39 - 10)))), (birdx - sx(50), sy(115)))
 
                 gameDisplay.blit(pygame.transform.scale(
-                    birds[b3], (57 - 20, 39 - 20)), (birdx, 110 + 30))
+                    birds[b3], (int(sx(57 - 20)), int(sy(39 - 20)))), (birdx, sy(110 + 30)))
 
             if(birdsingleshow == 1):
 
                 gameDisplay.blit(pygame.transform.scale(
-                    birds[b3], (57 + 10, 39 + 10)), (birdxslow, 110))
+                    birds[b3], (int(sx(57 + 10)), int(sy(39 + 10)))), (birdxslow, sy(110)))
 
             # Birds movement
 
-            if(birdx >= 300 and birdgroupshow == 1):
-                birdx -= 3
+            if(birdx >= (sx(300, 1)) and birdgroupshow == 1):
+                birdx -= sx(3)
 
-            if(birdxslow >= 300 and birdsingleshow == 1):
-                birdxslow -= 2
+            if(birdxslow >= (sx(300, 1)) and birdsingleshow == 1):
+                birdxslow -= sx(2)
 
             if(birdmainshow == 1):
 
@@ -414,16 +413,16 @@ class game:
 
             # Birds coordinates updates
 
-            if(birdx < 300):
-                birdx = 900
+            if(birdx < (sx(300, 1))):
+                birdx = sx(900, 1)
                 birdgroupshow = 0
 
-            if(birdxslow < 300):
-                birdxslow = 950
+            if(birdxslow < (sx(300, 1))):
+                birdxslow = sx(950, 1)
                 birdsingleshow = 0
 
-            if((birdxfast + 30) <= 300):
-                birdxfast = 860
+            if((birdxfast + sx(30)) <= (sx(300, 1))):
+                birdxfast = sx(860, 1)
                 birdmainshow = 0
 
             if(birdsingleshow == 0 and i % 18 == 0):
@@ -434,9 +433,9 @@ class game:
 
             # BIRD PICK'S YOU UP
 
-            if(pygame.transform.scale(birds[b4], (57 + 30, 39 + 20)).get_rect(center=(birdxfast + 40, 400 + 20)).colliderect(herolist[j].get_rect(center=(herox + 18, heroy + herod + 15)))):
+            if(pygame.transform.scale(birds[b4], (int(sx(57 + 30)), int(sy(39 + 20)))).get_rect(center=(birdxfast + sx(40), sy(400 + 20))).colliderect(herolist[j].get_rect(center=(herox + sx(18), heroy + herod + sy(15))))):
 
-                herox = birdxfast + 30
+                herox = birdxfast + sx(30)
                 birdpickup = 1
 
                 if(birdsound == 0):
@@ -444,7 +443,7 @@ class game:
 
                 moveit = 0
 
-                if(herox < 320):
+                if(herox < (sx(320, 1))):
 
                     ext = 1
 
@@ -457,19 +456,19 @@ class game:
                 flappy.play(0)
 
             scores = font1.render(str(score), 1, (255, 255, 255))
-            gameDisplay.blit(scores, (580 + scoreshift, 40))
+            gameDisplay.blit(scores, (sx(580 + scoreshift, 1), sy(40)))
             fruitscores = font2.render(str(fruitscore), 1, (0, 0, 0))
-            gameDisplay.blit(fruitscores, (770 + fruitscoreshift, 13))
+            gameDisplay.blit(fruitscores, (sx(770 + fruitscoreshift, 1), sy(13)))
 
             if(perfect == 1):
 
                 vanish -= 1
 
                 msg1 = font3.render(_("Perfect!!!"), 1, (0, 0, 0))
-                gameDisplay.blit(msg1, (510, 120))
+                gameDisplay.blit(msg1, (sx(510, 1), sy(120)))
 
                 msg2 = font4.render(_("+1"), 1, (0, 0, 0))
-                gameDisplay.blit(msg2, (msgx, 460 + vanish))
+                gameDisplay.blit(msg2, (msgx, sy(460 + vanish)))
 
                 if(vanish < -50):
                     perfect = 0
@@ -477,8 +476,8 @@ class game:
 
             # fruits bounce up-down
 
-            if((pillar2nd - 429) > 80 and fruitx >= 429 and fruitx != 0 and not(fruitgot)):
-                gameDisplay.blit(fruit, (fruitx, 480 + bounce))
+            if((pillar2nd - sx(429)) > (sx(80, 1)) and fruitx >= (sx(429, 1)) and fruitx != 0 and not(fruitgot)):
+                gameDisplay.blit(fruit, (fruitx, sy(480 + bounce)))
 
             if(bouncedown == True):
                 if(i % 6 == 0):
@@ -493,7 +492,7 @@ class game:
 
             # Fruit vanish condition
 
-            if(fruitflag == 0 and herodownlist[j].get_rect(center=(herox + 18, heroy + herod + 10)).colliderect(fruit.get_rect(center=(fruitx + 14, 480 + bounce + 10)))):
+            if(fruitflag == 0 and herodownlist[j].get_rect(center=(herox + sx(18), heroy + herod + sy(10))).colliderect(fruit.get_rect(center=(fruitx + sx(14), sy(480 + bounce + 10))))):
                 fruitgot = not fruitgot
                 fruitflag = 1
                 if(herofallflag != 1):
@@ -513,14 +512,14 @@ class game:
 
             # backgound frames roll-over
 
-            if(backx1 < -1280):
+            if(backx1 < -(sx(1280))):
                 # if not(back==back2):
-                backx1 = 1270
+                backx1 = sx(1270)
                 # else:
                 #    backx1=1260
-            if(backx2 < -1280):
+            if(backx2 < -(sx(1280))):
                 # if not(back==back2):
-                backx2 = 1270
+                backx2 = sx(1270)
                 # else:
                 #    backx2=1260
 
@@ -539,21 +538,21 @@ class game:
                 if(upsidedown == False):
                     herod = 0
                     gameDisplay.blit(
-                        herolist[j], (herox, heroy + herod - (birdpickup * 5)))
+                        herolist[j], (herox, heroy + (herod - sy(birdpickup * 5))))
                 else:
                     herod = 33
-                    gameDisplay.blit(herodownlist[j], (herox, heroy + herod))
+                    gameDisplay.blit(herodownlist[j], (herox, heroy + sy(herod)))
 
             # Main bird display
 
             if(birdmainshow == 1):
 
                 gameDisplay.blit(pygame.transform.scale(
-                    birds[b4], (57 + 30, 39 + 20)), (birdxfast, 400))
+                    birds[b4], (int(sx(57 + 30)), int(sy(39 + 20)))), (birdxfast, sy(400)))
 
             # Inverted hero collsion with pillar test
 
-            if(upsidedown == True and herox + 30 >= pillar2nd):
+            if(upsidedown == True and (herox + sx(30)) >= pillar2nd):
 
                 herofall = 1
                 moveit = 0
@@ -566,7 +565,7 @@ class game:
                 if(k <= 6):
                     gameDisplay.blit(herokicklist[0], (herox, heroy))
                 if(k <= 12):
-                    gameDisplay.blit(herokicklist[1], (herox - 1, heroy + 2))
+                    gameDisplay.blit(herokicklist[1], (herox - sx(1), heroy + sy(2)))
 
                 if(keypressflag == 1):
                     k += 1
@@ -574,22 +573,22 @@ class game:
                     k = 0
 
             if(moveit == 1):  # hero moving right
-                herox += 4
-                heropointer += 4
-                backx1 -= 1
-                backx2 -= 1
+                herox += sx(4)
+                heropointer += sx(4)
+                backx1 -= sx(1)
+                backx2 -= sx(1)
 
-            if(herox >= 845):
+            if(herox >= (sx(845, 1))):
                 herofallflag = 1
                 herofall = 1
                 moveit = 0
                 flag = 1
 
-            gameDisplay.blit(pillar1, (pillar1x, 470))
+            gameDisplay.blit(pillar1, (pillar1x, sy(470)))
 
-            gameDisplay.blit(pillar2, (pillar2x, 470))
+            gameDisplay.blit(pillar2, (pillar2x, sy(470)))
 
-            gameDisplay.blit(pillar3, (pillar3x, 470))
+            gameDisplay.blit(pillar3, (pillar3x, sy(470)))
 
             #pygame.draw.circle(gameDisplay,white, (birdxfast+40,400+40) ,3, 2)
 
@@ -613,7 +612,7 @@ class game:
                     kick.stop()
                     landing.play(0)
                     anglenum = 0
-                    sticky1 = 472
+                    sticky1 = sy(472)
                     stickx1 = stickx + sticklength
                     # sticklength=stickx1-stickx
                     flag = 0
@@ -640,19 +639,19 @@ class game:
 
                     # Birds Speed calculation
 
-                    if(sticklength > 190 and randint(0, 2) == 0):
-                        birdspeed = int((1680) / sticklength)
-                        birdspeed += 3
+                    if(sticklength > sx(190, 1) and randint(0, 2) == 0):
+                        birdspeed = int(sx(1680) / sticklength)
+                        birdspeed += sx(3)
                         birdmainshow = 1
                         chichi.play(0)
 
                     colortest = gameDisplay.get_at(
-                        (457 + sticklength + 2, heroy + 40))
+                        (int(sx(457, 1) + sticklength + sx(2)), int(heroy + sy(40))))
 
                     if not((colortest[0] == 0 and colortest[1] == 0 and colortest[2] == 0) or (colortest[0] == 1 and colortest[1] == 1 and colortest[2] == 1)):
                         herofallflag = 1
                     colortest = gameDisplay.get_at(
-                        (457 + sticklength, heroy + 30))
+                        (int(sx(457, 1) + sticklength), int(heroy + sy(30))))
 
                     if(colortest[0] == 255):
                         perfectflag = 1
@@ -676,7 +675,7 @@ class game:
                         # print "hey"
                         anglenum = -90
                         sticky1 = sticky + sticklength
-                        stickx1 = 455
+                        stickx1 = sx(455, 1)
                         # sticklength=stickx1-stickx
                         # flag=0
                         moveit = 1
@@ -730,7 +729,7 @@ class game:
             
             '''
 
-            if(moveit == 1 and heropointer <= (pillar2nd - 457)):
+            if(moveit == 1 and heropointer <= (pillar2nd - sx(457, 1))):
 
                 if event.type == pygame.KEYDOWN and event.key == 273 and keypress == 0:
                     # jump.play(0)
@@ -748,27 +747,27 @@ class game:
 
                 stickgrowsound = 0
                 if(sticky1 >= 0):
-                    sticky1 -= 5
+                    sticky1 -= sy(5)
 
             # print pillar2nd
 
             # coordinates calculation while stick free fall
 
             if(flag == 1):
-                sticky1 = 472 - sticklength * sin(angle)
-                stickx1 = 455 + sticklength * cos(angle)
+                sticky1 = sy(472) - sticklength * sin(angle)
+                stickx1 = sx(455, 1) + sticklength * cos(angle)
 
             # zeroing the length of the stick as it surpassed left boundary
 
-            if(stickx <= 349):
+            if(stickx <= (sx(349, 1))):
 
                 stickmove = 0
-                stickx1 = stickx = 455
-                sticky1 = sticky = 472
+                stickx1 = stickx = sx(455, 1)
+                sticky1 = sticky = sy(472)
 
             if((stickx1 - stickx) != 0 or sticky1 - sticky != 0):
                 pygame.draw.line(gameDisplay, black,
-                                 (stickx1, sticky1), (stickx, sticky), 6)
+                                 (stickx1, sticky1), (stickx, sticky), int(sx(6)))
 
             # test circles
 
@@ -777,34 +776,34 @@ class game:
 
             # if hero has to fall
 
-            if((herox + 30) >= 457 + sticklength and herofallflag == 1):
+            if((herox + sx(30)) >= sx(457, 1) + sticklength and herofallflag == 1):
                 herofall = 1
                 moveit = 0
                 flag = 1
 
             # if hero has to stop
-            if((herox + 30) >= 457 + sticklength and herofallflag == 0 and moveit == 1 and heroy < 768):
+            if((herox + sx(30)) >= sx(457, 1) + sticklength and herofallflag == 0 and moveit == 1 and heroy < sy(768)):
 
-                color = gameDisplay.get_at((herox + 30 + 4, heroy + 40))
+                color = gameDisplay.get_at((int(herox + sx(30 + 4)), int(heroy + sy(40))))
 
                 if not((color[0] == 0 and color[1] == 0 and color[2] == 0) or (color[0] == 1 and color[1] == 1 and color[2] == 1)):
                     moveit = 0
                     pillarmoveflag = 1
                     stickmove = 1
 
-                    if(pillar1x > 840):
+                    if(pillar1x > sx(840, 1)):
                         acc1 = 1
                         acc2 = 0
                         acc3 = 0
                         pillarfast = pillar1x
 
-                    if(pillar2x > 840):
+                    if(pillar2x > sx(840, 1)):
                         acc1 = 0
                         acc2 = 1
                         acc3 = 0
                         pillarfast = pillar2x
 
-                    if(pillar3x > 840):
+                    if(pillar3x > sx(840, 1)):
                         acc1 = 0
                         acc2 = 0
                         acc3 = 1
@@ -831,7 +830,7 @@ class game:
                     time = abs((heropointer) / speed)
                     # print heropointer
 
-                    acc = abs(((pillarfast) - (429 + pillardist)) / time)
+                    acc = abs(((pillarfast) - (sx(429, 1) + pillardist)) / time)
 
                     # print
                     # str(((pillarfast)-(429+pillardist)))+str(heropointer)
@@ -886,11 +885,11 @@ class game:
 
                     pillarmoveflag = 0
 
-                    if(lastpillardist < 160):
-                        pillardist = randint(160, 260)
+                    if(lastpillardist < sx(160, 1)):
+                        pillardist = randint(int(sx(160, 1)), int(sx(260, 1)))
                         lastpillardist = pillardist
                     else:
-                        pillardist = randint(100, 160)
+                        pillardist = randint(int(sx(100, 1)), int(sx(160, 1)))
                         lastpillardist = pillardist
 
                     if(score < (10**shift1) - 1):
@@ -920,8 +919,8 @@ class game:
 
                     # re-initialization of the variables
 
-                    stickx1 = stickx = 455
-                    sticky1 = sticky = 472
+                    stickx1 = stickx = sx(455, 1)
+                    sticky1 = sticky = sy(472)
 
                     anglenum = 90
                     angle = (pi / 180) * anglenum
@@ -934,8 +933,8 @@ class game:
 
                     moveit = 0  # hero move flag
 
-                    herox = 429
-                    heroy = 442
+                    herox = sx(429, 1)
+                    heroy = sy(442)
                     heropointer = 0
 
                     i = 0
@@ -962,44 +961,44 @@ class game:
 
                 # print "help"
 
-                if(pillar1 == delta and pillar1x < 415):
-                    pillarfast = pillar1x = randint(845, 900)
+                if(pillar1 == delta and pillar1x < (sx(415, 1))):
+                    pillarfast = pillar1x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar1 = pillarlist[randint(0, 2)]
                     flagchk1 = 1
 
-                if(pillar2 == delta and pillar2x < 415):
-                    pillarfast = pillar2x = randint(845, 900)
+                if(pillar2 == delta and pillar2x < (sx(415, 1))):
+                    pillarfast = pillar2x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar2 = pillarlist[randint(0, 2)]
                     flagchk2 = 1
 
-                if(pillar3 == delta and pillar3x < 415):
-                    pillarfast = pillar3x = randint(845, 900)
+                if(pillar3 == delta and pillar3x < (sx(415, 1))):
+                    pillarfast = pillar3x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar3 = pillarlist[randint(0, 2)]
                     flagchk3 = 1
 
-                if(pillar1x <= 348 and flagchk1 != 1):
-                    pillarfast = pillar1x = randint(845, 900)
+                if(pillar1x <= (sx(348, 1)) and flagchk1 != 1):
+                    pillarfast = pillar1x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar1 = pillarlist[randint(0, 2)]
 
-                if(pillar2x <= 348 and flagchk2 != 1):
-                    pillarfast = pillar2x = randint(845, 900)
+                if(pillar2x <= (sx(348, 1)) and flagchk2 != 1):
+                    pillarfast = pillar2x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar2 = pillarlist[randint(0, 2)]
 
-                if(pillar3x <= 348 and flagchk3 != 1):
-                    pillarfast = pillar3x = randint(845, 900)
+                if(pillar3x <= (sx(348, 1)) and flagchk3 != 1):
+                    pillarfast = pillar3x = randint(int(sx(845, 1)), int(sx(900, 1)))
                     pillar3 = pillarlist[randint(0, 2)]
 
                 # 2nd PILLAR DETECTION
 
-                if(pillar1x > 457 and pillar1x < 840):
+                if(pillar1x > (sx(457, 1)) and pillar1x < (sx(840, 1))):
                     # acc1=2
                     pillar2nd = pillar1x
 
-                if(pillar2x > 457 and pillar2x < 840):
+                if(pillar2x > (sx(457, 1)) and pillar2x < (sx(840, 1))):
                     # acc2=2
                     pillar2nd = pillar2x
 
-                if(pillar3x > 457 and pillar3x < 840):
+                if(pillar3x > (sx(457, 1)) and pillar3x < (sx(840, 1))):
                     # acc3=2
                     pillar2nd = pillar3x
 
@@ -1007,23 +1006,23 @@ class game:
 
                 # fruit placement
 
-                if((pillar2nd - 459) > 80):
-                    fruitx = randint(470, pillar2nd - 20 - 8)
+                if((pillar2nd - sx(459, 1)) > (sx(80, 1))):
+                    fruitx = randint(int(sx(470, 1)), int(pillar2nd - sx(20 - 8)))
 
             # print pillar1.rect.topleft
 
             # left and right black background patches
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, sx(350, 1), sy(768)))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, (sx(840, 1), 0, sx(693, 1), sy(768)))
 
             if(herofall == 1 or ext == 1):
 
                 if(ext != 1):
-                    heroy += 15
+                    heroy += sy(15)
 
-                if(heroy > 770 or ext == 1):
+                if(heroy > (sy(770)) or ext == 1):
 
                     landing.stop()
                     dead.stop()
@@ -1039,8 +1038,8 @@ class game:
 
                         # VARIABLE INITIALIZATION
 
-                        stickx1 = stickx = 455
-                        sticky1 = sticky = 472
+                        stickx1 = stickx = sx(455, 1)
+                        sticky1 = sticky = sy(472)
 
                         anglenum = 90
                         angle = (pi / 180) * anglenum
@@ -1053,8 +1052,8 @@ class game:
 
                         moveit = 0  # hero move flag
 
-                        herox = 429
-                        heroy = 442
+                        herox = sx(429, 1)
+                        heroy = sy(442)
 
                         heropointer = 0
 
@@ -1062,9 +1061,9 @@ class game:
                         j = 0
                         k = 0
 
-                        pillar1x = 355
-                        msgx = pillar2x = 650
-                        pillar3x = randint(845, 900)
+                        pillar1x = sx(355, 1)
+                        msgx = pillar2x = sx(650, 1)
+                        pillar3x = randint(int(sx(845, 1)), int(sx(900, 1)))
 
                         pillar1 = alpha
                         pillar2 = beta
@@ -1087,13 +1086,13 @@ class game:
 
                         ext = 0
 
-                        speed = 8
+                        speed = sx(8)
 
                         acc1 = acc2 = acc3 = 0
 
                         pillarfast = 0
 
-                        pillardist = randint(60, 260)
+                        pillardist = randint(int(sx(60, 1)), int(sx(260, 1)))
                         lastpillardist = pillardist
 
                         stickgrowsound = 0
@@ -1102,8 +1101,8 @@ class game:
 
                         keypress = 0
 
-                        backx1 = 350
-                        backx2 = 1630
+                        backx1 = sx(350, 1)
+                        backx2 = sx(1630, 1)
 
                         upsidedown = False
 
@@ -1131,7 +1130,7 @@ class game:
                         fruitgot = False
                         fruitflag = 0
 
-                        herod = 33
+                        herod = sy(33)
 
                         fruitscore = 0
                         score = 0
@@ -1149,9 +1148,9 @@ class game:
                         b3 = 4
                         b4 = 6
 
-                        birdx = 900
-                        birdxslow = 950
-                        birdxfast = 860
+                        birdx = sx(900, 1)
+                        birdxslow = sx(950, 1)
+                        birdxfast = sx(860, 1)
 
                         birdgroupshow = 0
                         birdsingleshow = 0

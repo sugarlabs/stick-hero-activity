@@ -33,13 +33,14 @@ from sugar3.activity.activity import get_activity_root
 
 from math import *
 from random import *
+from rules import *
 
 
 class scorescreen:
 
     def make(self, gameDisplay, back, score, fruitscore):
 
-        pygame.init()
+        gameDisplay = display_init()
         sound = True
 
         try:
@@ -60,34 +61,40 @@ class scorescreen:
         press = 0
 
         info = pygame.display.Info()
-        gameDisplay = pygame.display.get_surface()
+
 
         if not(gameDisplay):
 
             gameDisplay = pygame.display.set_mode(
                 (info.current_w, info.current_h))
 
+        # Functions sx(coord, shift) and sy(coord) are defined in rules.py
+        # sx() and sy() are used to scale appropriately
+
         replay = pygame.image.load("images/scorescreen/replay.png")
-        replay = pygame.transform.scale(replay, (104, 102))
+        replay = pygame.transform.scale(replay, (int(sx(104)), int(sy(102))))
+
         scoreplate = pygame.image.load("images/scorescreen/scoreplate.png")
-        scoreplate = pygame.transform.scale(scoreplate, (230 + 130, 140 + 80))
+        scoreplate = pygame.transform.scale(scoreplate, (int(sx(230 + 130)), int(sy(140 + 80))))
 
         plate = pygame.image.load("images/scoreplate.png").convert()
-        plate = pygame.transform.scale(plate, (340, 90))
+        plate = pygame.transform.scale(plate, (int(sx(340)), int(sy(90))))
         plate.set_alpha(220)
 
         home = pygame.image.load("images/scorescreen/home.png")
+        home = pygame.transform.scale(
+                    home, (int(sx(108)), int(sy(106))))
         # back=pygame.image.load("screenshot/screenshot.png")
 
         back.convert()
         back.set_alpha(225)
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 50
+        font_size = int(sx(50))
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 30)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(sx(30)))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(sx(40)))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(sx(20)))
 
         down = 1
         bounce = 0
@@ -153,32 +160,31 @@ class scorescreen:
                         down = 1
 
             gameDisplay.fill(white)
-            gameDisplay.blit(back, (350, 0))
+            gameDisplay.blit(back, (sx(350, 1), 0))
 
-            gameDisplay.blit(plate, (430, 40))
+            gameDisplay.blit(plate, (sx(430, 1), sy(40)))
 
             head1 = font1.render(_("GAME OVER!"), 1, (white))
-            gameDisplay.blit(head1, (440, 50))
+            gameDisplay.blit(head1, (sx(440, 1), sy(50)))
 
-            gameDisplay.blit(scoreplate, (420, 200))
+            gameDisplay.blit(scoreplate, (sx(420, 1), sy(200)))
 
-            gameDisplay.blit(home, (380 + 60 + 25, 400 + 50))
+            gameDisplay.blit(home, (sx(380 + 60 + 25, 1), sy(400 + 50)))
 
-            gameDisplay.blit(replay, (600 + 60 - 25, 400 + 50))
+            gameDisplay.blit(replay, (sx(600 + 60 - 25, 1), sy(400 + 50)))
 
             # score check
 
             scores = font2.render(str(score), 1, black)
-            gameDisplay.blit(scores, (575, 250))
+            gameDisplay.blit(scores, (sx(575, 1), sy(250)))
 
             maxscores = font2.render(str(maxscore), 1, black)
-            gameDisplay.blit(maxscores, (575, 350))
+            gameDisplay.blit(maxscores, (sx(575, 1), sy(350)))
 
             # GAME START
 
-            if home.get_rect(center=(380 + 60 + 52 + 25, 400 + 50 + 51)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    home, (108, 106)), (380 + 60 + 25 - 2, 400 + 50 - 2))
+            if home.get_rect(center=(sx(380 + 60 + 52 + 25, 1), sy(400 + 50 + 51))).collidepoint(mos_x, mos_y):
+                gameDisplay.blit(home, (sx(380 + 60 + 25 - 2, 1), sy(400 + 50 - 2)))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
@@ -189,17 +195,16 @@ class scorescreen:
 
             # Help menu
 
-            if replay.get_rect(center=(600 + 60 + 52 - 25, 400 + 50 + 51)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    replay, (108, 106)), (600 + 60 - 25 - 2, 400 + 50 - 2))
+            if replay.get_rect(center=(sx(600 + 60 + 52 - 25, 1), sy(400 + 50 + 51))).collidepoint(mos_x, mos_y):
+                gameDisplay.blit(replay, (sx(600 + 60 - 25 - 2, 1), sy(400 + 50 - 2)))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
                     return 1
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, sx(350, 1), sy(768)))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, (sx(840, 1), 0, sx(693, 1), sy(768)))
 
             pygame.display.update()
             clock.tick(60)
