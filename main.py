@@ -334,13 +334,18 @@ class game:
 
         while not crashed:
             # Gtk events
-
+            keydown_pressed = False
+            keyup_pressed = False
             while Gtk.events_pending():
                 Gtk.main_iteration()
             for event in pygame.event.get():
                 # totaltime+=timer.tick()
                 if event.type == pygame.QUIT:
                     crashed = True
+                elif event.type == pygame.KEYDOWN and event.key == 273:
+                    keydown_pressed = True
+                elif event.type == pygame.KEYUP and event.key == 273:
+                    keyup_pressed = True
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -686,7 +691,7 @@ class game:
 
             if(keyinit == 0):
 
-                if event.type == pygame.KEYDOWN and event.key == 273:
+                if keydown_pressed:
                     # jump.play(0)
 
                     keypressflag = 1
@@ -695,7 +700,7 @@ class game:
 
             if(keypressflag == 1):
 
-                if event.type == pygame.KEYUP and event.key == 273:
+                if keyup_pressed:
                     flag = 1
 
                     stickgrow.stop()
@@ -726,7 +731,7 @@ class game:
 
             if(moveit == 1 and heropointer <= (pillar2nd - sx(457, 1))):
 
-                if event.type == pygame.KEYDOWN and event.key == 273 and keypress == 0:
+                if keydown_pressed and keypress == 0:
                     # jump.play(0)
 
                     rollupdown.play()
@@ -734,7 +739,7 @@ class game:
 
                     keypress = 1
 
-            if event.type == pygame.KEYUP and event.key == 273 and keypress == 1:
+            if keyup_pressed and keypress == 1:
 
                 keypress = 0
 
