@@ -127,6 +127,7 @@ class welcomescreen:
 
         while not crashed:
             # Gtk events
+            mouse_button_up = False
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
@@ -134,6 +135,8 @@ class welcomescreen:
                 # totaltime+=timer.tick()
                 if event.type == pygame.QUIT:
                     crashed = True
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    mouse_button_up = True
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -179,7 +182,7 @@ class welcomescreen:
                     head1 = font2.render(_(str(fruitmaxscore)), 1, (white))
                     gameDisplay.blit(head1, (sx(785, 1), sy(60)))
 
-                if event.type == pygame.MOUSEBUTTONUP:
+                if mouse_button_up:
                     press = 0
 
             # GAME START
