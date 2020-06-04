@@ -118,13 +118,15 @@ class rulescreen:
 
         while not crashed:
             # Gtk events
-
+            mouse_button_up = False
             while Gtk.events_pending():
                 Gtk.main_iteration()
             for event in pygame.event.get():
                 # totaltime+=timer.tick()
                 if event.type == pygame.QUIT:
                     crashed = True
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    mouse_button_up = True
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -175,7 +177,7 @@ class rulescreen:
 
                     return 0
 
-                if event.type == pygame.MOUSEBUTTONUP:
+                if mouse_button_up:
                     press = 0
 
             # left and right black background patches
