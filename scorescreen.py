@@ -33,7 +33,7 @@ from sugar3.activity.activity import get_activity_root
 
 from math import *
 from random import *
-from rules import *
+from rules import sx, sy, display_init
 
 
 class scorescreen:
@@ -67,9 +67,6 @@ class scorescreen:
 
             gameDisplay = pygame.display.set_mode(
                 (info.current_w, info.current_h))
-
-        # Functions sx(coord, shift) and sy(coord) are defined in rules.py
-        # sx() and sy() are used to scale appropriately
 
         replay = pygame.image.load("images/scorescreen/replay.png")
         replay = pygame.transform.scale(replay, (int(sx(104)), int(sy(102))))
