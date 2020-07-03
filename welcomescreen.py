@@ -34,7 +34,7 @@ from sugar3.activity.activity import get_activity_root
 
 from math import *
 from random import *
-from rules import *
+from rules import rulescreen, sx, sy, display_init
 
 
 class welcomescreen:
@@ -71,9 +71,6 @@ class welcomescreen:
             pygame.display.set_caption(_("Stick Hero"))
             # gameicon=pygame.image.load('data/images/icon.png')
             # pygame.display.set_icon(gameicon)
-
-        # Functions sx(coord, shift) and sy(coord) are defined in rules.py
-        # sx() and sy() are used to scale appropriately
 
         fruit = pygame.image.load("images/welcomescreen/fruit.png")
         fruit = pygame.transform.scale(fruit, (int(sx(40)), int(sy(40))))

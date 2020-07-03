@@ -213,19 +213,20 @@ class rulescreen:
 
     global sx, sy, scale_img
 
-    # sx is used to scale the x-coordinate
     def sx(coord, shift=0):
+        ''' sx is used to scale the x-coordinate '''
         if shift:
         # shift=1 is passed when a shift is expected
             return (coord + SHIFT_CORRECTOR) * scale_x
         else:
             return coord * scale_x
 
-    # sy is used to scale the y-coordinate
     def sy(coord):
+        ''' sx is used to scale the x-coordinate '''
         return coord * scale_y
 
     def scale_img(filepath):
+        ''' scale_img is used to scale the image proportionately '''
         image = pygame.image.load(filepath)
         sizex, sizey = image.get_rect().size
         image = \

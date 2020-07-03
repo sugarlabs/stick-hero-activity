@@ -34,10 +34,10 @@ from sugar3.activity.activity import get_activity_root
 from math import *
 from random import *
 
-from scorescreen import *
-from welcomescreen import *
+from scorescreen import scorescreen
+from welcomescreen import welcomescreen
 
-from rules import *
+from rules import rulescreen, sx, sy, display_init, scale_img
 
 
 class game:
@@ -74,11 +74,6 @@ class game:
             pygame.display.set_caption(_("Stick Hero"))
             gameicon = pygame.image.load('images/icon.png')
             pygame.display.set_icon(gameicon)
-
-        # Functions sx(coord, shift), sy(coord) and scale_img(image)
-        # defined in rules.py
-        # sx(), sy() and scale_img() are used to scale appropriately
-
 
         hero = scale_img("images/hero.png")
         herotr = hero
