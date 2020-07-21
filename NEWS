@@ -1,0 +1,42 @@
+v6
+
+* Fix event poll in pygame and fix UnboundLocalError (Srevin Saju),
+* Fix function documentation (Jui Pradhan),
+* Change import style from wildcard imports to explicit imports (Jui Pradhan),
+* Fix Let's Play doesn't restart the game (Jui Pradhan),
+* Adapt to display size (Jui Pradhan),
+* Align text Game Over! correctly (Swarup N),
+* Replace instance directory with activity data directory (Swarup N),
+* Save the score file in the instance directory of the activity (Swarup N),
+* Fix Volume Button icon (Swarup N),
+* Update to sugargame v1.2 (Yash Agrawal),
+* Removed score.pkl (Yash Agrawal),
+* Fixed fail to start (Yash Agrawal),
+* Port to GTK+3 (Utkarsh Tiwari),
+* Remove number translation (Utkarsh Tiwari),
+* Create and update README (Dipansh Khandelwal, Utkarsh Tiwari, James Cameron),
+* GPLv3 COPYING added and update metadata (pipix51),
+* PEP8 fixes (Utkarsh Tiwari)
+
+v5
+
+* Icon updated (Utkarsh Tiwari),
+* Internationalization added (Utkarsh Tiwari),
+* Free fonts added (Utkarsh Tiwari)
+
+v4
+
+* Bug fixes - change coordinates, delete .pyc files (Utkarsh Tiwari)
+
+v3
+
+* Change hardcoded coordinates (Utkarsh Tiwari)
+
+v2
+
+* Changes in activity metadata (Utkarsh Tiwari),
+* Debugging and feature additions (Utkarsh Tiwari)
+
+v1
+
+* Initial Release (Utkarsh Tiwari)
