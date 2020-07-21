@@ -1,6 +1,6 @@
 [Activity]
 name = Stick Hero
-activity_version = 5
+activity_version = 6
 bundle_id = org.sugarlabs.stickhero
 icon = stickhero
 exec = sugar-activity activity.Activity
