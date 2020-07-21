@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-27 03:53+0530\n"
+"POT-Creation-Date: 2020-07-21 22:11+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: activity/activity.info:2 /home/iamutkarsh/Documents/PYGAME/stick/main.py:72
-#: /home/iamutkarsh/Documents/PYGAME/stick/welcomescreen.py:68
+#: activity/activity.info:2 main.py:74 welcomescreen.py:71
 msgid "Stick Hero"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/scorescreen.py:156
-msgid "GAME OVER!"
+#: activity/activity.info:3
+msgid "An arcade game"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/main.py:461
+#: activity.py:47 activity.py:71
+msgid "Sound"
+msgstr ""
+
+#: activity.py:68
+msgid "No sound"
+msgstr ""
+
+#: main.py:467
 msgid "Perfect!!!"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/main.py:464
+#: main.py:470
 msgid "+1"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/welcomescreen.py:47
+#: scorescreen.py:168
+msgid "GAME OVER!"
+msgstr ""
+
+#: welcomescreen.py:51
 msgid "error with sound"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/welcomescreen.py:214
+#: welcomescreen.py:220
 msgid "STICK"
 msgstr ""
 
-#: /home/iamutkarsh/Documents/PYGAME/stick/welcomescreen.py:217
+#: welcomescreen.py:223
 msgid "HERO"
 msgstr ""
