@@ -28,11 +28,10 @@ import pygame
 import sys
 from gettext import gettext as _
 
-from sugar3.activity.activity import get_activity_root
-
 from math import *
 from random import *
 from rules import sx, sy, display_init
+from score_path import score_path
 
 
 class scorescreen:
@@ -100,21 +99,21 @@ class scorescreen:
 
         maxscore = 0
         fruitmaxscore = 0
-        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+        self.score_path = score_path()
 
-        with open(score_path, 'rb') as input:  # REading
+        with open(self.score_path, 'rb') as input:  # REading
             maxscore = pickle.load(input)
             fruitmaxscore = pickle.load(input)
 
         if(fruitscore > fruitmaxscore):
             fruitmaxscore = fruitscore
-            with open(score_path, 'wb') as output:
+            with open(self.score_path, 'wb') as output:
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
                 pickle.dump(fruitmaxscore, output, pickle.HIGHEST_PROTOCOL)
 
         if(score > maxscore):
             maxscore = score
-            with open(score_path, 'wb') as output:
+            with open(self.score_path, 'wb') as output:
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
                 pickle.dump(fruitmaxscore, output, pickle.HIGHEST_PROTOCOL)
 
