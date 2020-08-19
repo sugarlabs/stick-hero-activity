@@ -817,10 +817,10 @@ class game:
                     
                     '''
 
-                    time = abs((heropointer) / speed)
+                    time = abs((heropointer) // speed)
                     # print heropointer
 
-                    acc = abs(((pillarfast) - (sx(429, 1) + pillardist)) / time)
+                    acc = abs(((pillarfast) - (sx(429, 1) + pillardist)) // time)
 
                     # print
                     # str(((pillarfast)-(429+pillardist)))+str(heropointer)
