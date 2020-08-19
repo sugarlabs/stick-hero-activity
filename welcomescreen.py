@@ -77,7 +77,7 @@ class welcomescreen:
         hero = pygame.transform.scale(hero, (int(sx(38)), int(sy(38))))
 
         play = pygame.image.load("images/play.png")
-        play = pygame.transform.scale(play, (int(sx(170)), int(sy(170))))
+        play = pygame.transform.scale(play, (int(sx(170)), int(sx(170))))
 
         beta = pygame.image.load("images/alpha.png")
         beta = pygame.transform.scale(beta, (int(sx(105)), int(sy(248))))
