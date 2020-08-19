@@ -41,15 +41,8 @@ from score_path import score_path
 class game:
 
     def make(self):
-
-        gameDisplay = display_init()
         sound = True
-
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print('error with sound', err)
+        gameDisplay = display_init()
 
         black = (0, 0, 0)
         white = (255, 255, 255)

@@ -21,7 +21,7 @@ class Activity(activity.Activity):
         self.max_participants = 1
         self.sound = True
         self.game = main.game()
-        self.game.canvas = sugargame.canvas.PygameCanvas(self, main=self.game.make, modules=[pygame.display, pygame.font])
+        self.game.canvas = sugargame.canvas.PygameCanvas(self, main=self.game.make, modules=[pygame.display, pygame.font, pygame.mixer])
         self.set_canvas(self.game.canvas)
         self.game.canvas.grab_focus()        
         self.build_toolbar()
