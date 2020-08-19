@@ -25,7 +25,6 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pickle
 import pygame
-import sys
 from gettext import gettext as _
 
 from math import *
@@ -1160,7 +1159,7 @@ class game:
 
             if crashed == True:                                   # Game crash or Close check
                 pygame.quit()
-                sys.exit()
+                return
 
         # Just a window exception check condition
 
@@ -1170,7 +1169,7 @@ class game:
 
         if crashed == True:
             pygame.quit()
-            sys.exit()
+            return
 
 
 if __name__ == "__main__":

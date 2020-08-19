@@ -25,7 +25,6 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pickle
 import pygame
-import sys
 
 from math import *
 from random import *
@@ -193,7 +192,7 @@ class rulescreen:
             # Game crash or Close check
             if crashed == True:
                 pygame.quit()
-                sys.exit()
+                return
 
         # Just a window exception check condition
 
@@ -203,7 +202,7 @@ class rulescreen:
 
         if crashed == True:
             pygame.quit()
-            sys.exit()
+            return
 
     global sx, sy, scale_img
 
