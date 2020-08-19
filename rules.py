@@ -48,13 +48,6 @@ class rulescreen:
     def make(self, gameDisplay):
 
         sound = True
-
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print('error with sound', err)
-
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()

@@ -41,13 +41,6 @@ class welcomescreen:
 
         gameDisplay = display_init()
         sound = True
-
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print(_('error with sound'), err)
-
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
