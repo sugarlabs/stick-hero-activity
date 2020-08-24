@@ -1162,11 +1162,6 @@ class game:
                 return
 
         # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
         if crashed == True:
             pygame.quit()
             return
