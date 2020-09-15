@@ -330,11 +330,16 @@ class game:
                 Gtk.main_iteration()
             for event in pygame.event.get():
                 # totaltime+=timer.tick()
+                keys = [pygame.K_UP, pygame.K_LSHIFT, pygame.K_RSHIFT]
                 if event.type == pygame.QUIT:
                     crashed = True
-                elif event.type == pygame.KEYDOWN and event.key == 273:
+                elif event.type == pygame.KEYDOWN and event.key in keys:
                     keydown_pressed = True
-                elif event.type == pygame.KEYUP and event.key == 273:
+                elif event.type == pygame.KEYUP and event.key in keys:
+                    keyup_pressed = True
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    keydown_pressed = True
+                elif event.type == pygame.MOUSEBUTTONUP:
                     keyup_pressed = True
 
             mos_x, mos_y = pygame.mouse.get_pos()
