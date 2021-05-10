@@ -349,6 +349,8 @@ class game:
             if(catch == 0):
                 b = welcomescreen()
                 catch = b.make(gameDisplay, back)
+                if catch is True:
+                    return
 
             gameDisplay.fill(white)
             gameDisplay.blit(back, (backx1, 0))
@@ -1028,6 +1030,9 @@ class game:
 
                     a = scorescreen()
                     catch = a.make(gameDisplay, back, score, fruitscore)
+                    if catch is True:
+                        return
+
 
                     if(catch == 1 or catch ==0):
 

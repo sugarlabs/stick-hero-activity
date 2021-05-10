@@ -227,7 +227,7 @@ class welcomescreen:
 
             if crashed == True:                                   # Game crash or Close check
                 pygame.quit()
-                return
+                return crashed
 
         # Just a window exception check condition
 
@@ -237,4 +237,4 @@ class welcomescreen:
 
         if crashed == True:
             pygame.quit()
-            return
+            return crashed
