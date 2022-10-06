@@ -1,3 +1,11 @@
+v7
+
+* Fix PyGame errors (Sourabha G)
+* Fix mishandling of repeating keys (James Cameron)
+* Add Ctrl+Q as accelerator to stop (Saumya Mishra)
+* Add a separate method for score_path (Saumya Mishra) 
+* Port to Python3 : 2to3 (Saumya Mishra)
+
 v6
 
 * Fix event poll in pygame and fix UnboundLocalError (Srevin Saju),
