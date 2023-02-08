@@ -285,10 +285,6 @@ class game:
                 pickle.dump(0, output, pickle.HIGHEST_PROTOCOL)
                 pickle.dump(0, output, pickle.HIGHEST_PROTOCOL)
 
-        with open(self.score_path, 'rb') as input:  # REading
-            fruitscore = pickle.load(input)
-            fruitscore = pickle.load(input)
-
         scoreshift = 0
         fruitscoreshift = 0
         shift1 = 1
