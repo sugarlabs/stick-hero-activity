@@ -215,7 +215,7 @@ class rulescreen:
             return coord * scale_x
 
     def sy(coord):
-        ''' sx is used to scale the x-coordinate '''
+        ''' sy is used to scale the y-coordinate '''
         return coord * scale_y
 
     def scale_img(filepath):
