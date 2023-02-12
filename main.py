@@ -646,7 +646,7 @@ class game:
                     colortest = gameDisplay.get_at(
                         (int(sx(457, 1) + sticklength), int(heroy + sy(30))))
 
-                    if(colortest[0] == 255):
+                    if(colortest[0] == 255 and colortest[1] == 0 and colortest[2] == 0):
                         perfectflag = 1
                         perfectsound.play()
                         perfect = 1
