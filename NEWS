@@ -1,3 +1,10 @@
+v8
+
+* Update Sugargame to fix arrow key not working (Riya Jain)
+* Bug Fix for the perfect Score (Riya Jain)
+* Corrected a comment (Riya Jain)
+* Bug Fix in Fruit score (Riya Jain)
+
 v7
 
 * Fix PyGame errors (Sourabha G)
