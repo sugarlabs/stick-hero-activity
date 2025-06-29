@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-07 07:39-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: activity/activity.info:2 main.py:64 welcomescreen.py:61
+msgid "Stick Hero"
+msgstr ""
+
+#: activity/activity.info:3
+msgid "An arcade game"
+msgstr ""
+
+#: activity.py:46 activity.py:71
+msgid "Sound"
+msgstr ""
+
+#: activity.py:68
+msgid "No sound"
+msgstr ""
+
+#: main.py:464
+msgid "Perfect!!!"
+msgstr ""
+
+#: main.py:467
+msgid "+1"
+msgstr ""
+
+#: scorescreen.py:159
+msgid "GAME OVER!"
+msgstr ""
+
+#: welcomescreen.py:210
+msgid "STICK"
+msgstr ""
+
+#: welcomescreen.py:213
+msgid "HERO"
+msgstr ""
